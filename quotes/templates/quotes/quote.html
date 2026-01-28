@@ -1,0 +1,9 @@
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block title %}Random Quote - Oscar Wilde{% endblock %}
+
+{% block content %}
+<p class="quote">"{{ quote }}"</p>
+<img src="{% static image %}" alt="Oscar Wilde" class="quote-image">
+{% endblock %}

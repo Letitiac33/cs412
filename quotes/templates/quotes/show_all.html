@@ -1,0 +1,16 @@
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+{% block title %}All Quotes - Oscar Wilde{% endblock %}
+
+{% block content %}
+<h2>All Quotes</h2>
+{% for q in quotes %}
+    <p class="quote">"{{ q }}"</p>
+{% endfor %}
+
+<h2>All Images</h2>
+{% for img in images %}
+    <img src="{% static img %}" alt="Oscar Wilde" class="quote-image">
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Oscar Wilde Quotes{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'quotes/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Oscar Wilde Quotes</h1>
+        <nav>
+            <a href="{% url 'quote' %}">Random Quote</a>
+            <a href="{% url 'show_all' %}">All Quotes</a>
+            <a href="{% url 'about' %}">About</a>
+        </nav>
+    </header>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>Quotes by Oscar Wilde</p>
+    </footer>
+</body>
+</html>
