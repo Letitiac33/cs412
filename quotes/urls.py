@@ -1,3 +1,7 @@
+# File: urls.py
+# Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026
+# Description: URL patterns for Oscar Wilde quotes web app
+
 from django.urls import path                                                                                                          
 from . import views                                                                                                                   
                                                                                                                                         

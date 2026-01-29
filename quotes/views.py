@@ -1,6 +1,12 @@
+# File: views.py
+# Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026
+# Description: Quotes and images of Oscar Wilde with random selection 
+# functionality to support Oscar Wilde quotes webapp
+
 from django.shortcuts import render                                                                                                   
 import random
 
+# List of Oscar Wilde quotes
 quotes = [
     "Be yourself; everyone else is already taken.",
     "To live is the rarest thing in the world. Most people exist, that is all.",
@@ -11,6 +17,7 @@ quotes = [
     "You can never be overdressed or overeducated.",
 ]
 
+# List of paths to Oscar Wilde images, images are stored in static folder
 images = [
     'quotes/oscar1.jpg',                                                                                                              
     'quotes/oscar2.jpg',                                                                                                              
@@ -24,13 +31,16 @@ images = [
 ]
 
 def quote(request):
+    """Return an HTML page displaying a random quote and image."""
     context = {
         'quote': random.choice(quotes),
         'image': random.choice(images),
     }
     return render(request, 'quotes/quote.html', context)
 
+
 def show_all(request):
+    """Return an HTML page displaying all quotes and images."""
     context = {
         'quotes': quotes,
         'images': images,
@@ -38,4 +48,5 @@ def show_all(request):
     return render(request, 'quotes/show_all.html', context)
 
 def about(request):
+    """Return an HTML page displaying the about section."""
     return render(request, 'quotes/about.html')
