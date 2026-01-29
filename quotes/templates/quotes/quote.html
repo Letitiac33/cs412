@@ -1,13 +1,13 @@
 <!-- File: quote.html -->
 <!-- Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026 -->
-<!-- quote page for Oscar Wilde quotes webapp -->
+<!-- Quote page for Oscar Wilde quotes webapp -->
 
-<!-- base page contains header and navigation panel -->
+<!-- Base page contains header and navigation panel -->
 {% extends 'quotes/base.html' %}
-<!-- load static allows access to Oscar Wilde images -->
+<!-- Load static allows access to Oscar Wilde images -->
 {% load static %}
 
-<!-- page content: displays a random image and quote of Oscar Wilde -->
+<!-- Page content: Displays a random image and quote of Oscar Wilde -->
 {% block content %}
 <p class="quote">"{{ quote }}"</p>
 <img src="{% static image %}" alt="Oscar Wilde" class="quote-image">
