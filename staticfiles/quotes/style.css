@@ -1,3 +1,10 @@
+/*
+ * File: style.css
+ * Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026
+ * Description: Stylesheet for Oscar Wilde quotes webapp
+ */
+
+/* Base Styles */
 body {
     font-family: Georgia, serif;
     max-width: 900px;
@@ -7,6 +14,7 @@ body {
     color: #333;
 }
 
+/* Header Section */
 header {
     text-align: center;
     border-bottom: 2px solid #333;
@@ -19,6 +27,7 @@ header h1 {
     font-size: 2.5em;
 }
 
+/* Navigation */
 nav {
     margin-top: 15px;
 }
@@ -35,6 +44,7 @@ nav a:hover {
     text-decoration: underline;
 }
 
+/* Main Content Area */
 .content {
     background-color: #fff;
     padding: 30px;
@@ -42,6 +52,7 @@ nav a:hover {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Quote Styles */
 .quote {
     font-style: italic;
     font-size: 1.4em;
@@ -54,10 +65,4 @@ nav a:hover {
     max-width: 300px;
     margin: 20px auto;
     border-radius: 5px;
-}
-
-footer {
-    text-align: center;
-    margin-top: 30px;
-    color: #777;
 }
