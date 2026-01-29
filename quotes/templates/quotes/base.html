@@ -1,8 +1,15 @@
+<!-- File: base.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026 -->
+<!-- base page for Oscar Wilde quotes webapp. contains header and
+navigation pannel shared accross all pages -->
+
+<!-- load static allows access to style.css file -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- makes webapp responsive for mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Oscar Wilde Quotes{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'quotes/style.css' %}">
@@ -11,19 +18,17 @@
     <header>
         <h1>Oscar Wilde Quotes</h1>
         <nav>
+            <!-- navigation to other pages -->
             <a href="{% url 'quote' %}">Random Quote</a>
             <a href="{% url 'show_all' %}">All Quotes</a>
             <a href="{% url 'about' %}">About</a>
         </nav>
     </header>
 
+    <!-- page Content is provided by the specific HTML page extending this base page -->
     <div class="content">
         {% block content %}
         {% endblock %}
     </div>
-
-    <footer>
-        <p>Quotes by Oscar Wilde</p>
-    </footer>
 </body>
 </html>

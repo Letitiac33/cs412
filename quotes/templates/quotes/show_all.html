@@ -1,15 +1,22 @@
+<!-- File: show_all.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 1/28/2026 -->
+<!-- Image and quote catalog page for Oscar Wilde quotes webapp -->
+
+<!-- base page contains header and navigation panel -->
 {% extends 'quotes/base.html' %}
+<!-- load static allows access to Oscar Wilde images -->
 {% load static %}
 
-{% block title %}All Quotes - Oscar Wilde{% endblock %}
-
+<!-- page content: displays all images and quotes of Oscar Wilde -->
 {% block content %}
 <h2>All Quotes</h2>
+<!-- loops through and displays all quotes -->
 {% for q in quotes %}
     <p class="quote">"{{ q }}"</p>
 {% endfor %}
 
 <h2>All Images</h2>
+<!-- loops through and displays all images -->
 {% for img in images %}
     <img src="{% static img %}" alt="Oscar Wilde" class="quote-image">
 {% endfor %}
