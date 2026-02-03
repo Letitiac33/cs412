@@ -14,25 +14,29 @@ daily_specials = [
     "Coastal Market Catch with Seasonal Vegetables"
 ]
 
-# Menu items with prices 
-menu_prices = {
-    'clam_chowder': 13,
-    'lobster_roll': 28,
-    'fish_and_chips': 22,
-    'shrimp_scampi': 26,
-    'crab_cakes': 25,
-    'daily_special': 33,
+menu = {
+    'clam_chowder': {
+        'name': 'New England Clam Chowder',
+        'price': 13,
+    },
+    'lobster_roll': {
+        'name': 'Lobster Roll',
+        'price': 28,
+    },
+    'fish_and_chips': {
+        'name': 'Fish & Chips',
+        'price': 22,
+        'options' : ['Tartar Sauce', 'Malt Vinegar', 'Ketchup'],
+    },
+    'shrimp_scampi': {
+        'name': 'Shrimp Scampi',
+        'price': 26,
+    },
+    'crab_cakes': {
+        'name': 'Crab Cakes',
+        'price': 25,
+    },
 }
-
-# Menu items display names
-menu_names = {
-        'clam_chowder': 'New England Clam Chowder',
-        'lobster_roll': 'Lobster Roll',
-        'fish_and_chips': 'Fish & Chips',
-        'shrimp_scampi': 'Shrimp Scampi',
-        'crab_cakes': 'Crab Cakes',
-        'daily_special': 'Daily Special',
-    }
 
 def main(request):
     """Return an HTML page displaying the main Sealy's Restaurant page."""
@@ -41,7 +45,7 @@ def main(request):
 def order(request):
     """Return an HTML page displaying Sealy's online order form with random daily special."""
     context = {
-        'menu' : menu_prices,
+        'menu' : menu,
         'daily_special': random.choice(daily_specials),
     }
     return render(request, 'restaurant/order.html', context)
@@ -58,15 +62,11 @@ def confirmation(request):
     # Check which menu items were ordered and calculate total price
     ordered_items = []
     total_price = 0.0
-    for item, price in menu_prices.items():
-
+    for item in menu():
         # If request contains menu item, add it to total
         if request.POST.get(item):
-            ordered_items.append({
-                'name': menu_names[item],
-                'price': price,
-            })
-            total_price += price
+            ordered_items.append(item)
+            total_price += item['price']
 
     # Aggregate context for confirmation page
     context = {
