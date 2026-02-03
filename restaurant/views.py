@@ -62,7 +62,7 @@ def confirmation(request):
     # Check which menu items were ordered and calculate total price
     ordered_items = []
     total_price = 0.0
-    for item in menu():
+    for item in menu:
         # If request contains menu item, add it to total
         if request.POST.get(item):
             ordered_items.append(item)
