@@ -9,7 +9,6 @@ urlpatterns = [
     path('', views.restaurant, name='main'), 
     path('main/', views.restaurant, name='main'), 
     path('order/', views.restaurant, name='order'),
-    path('confirmation/', views.restaurant, name='confirmation'),
-                                                                                                                                                                                                
+    path('confirmation/', views.restaurant, name='confirmation'),                                                                                                                                                                                     
 ]                                                                                                                                     
      
