@@ -4,7 +4,8 @@
 
 from django.shortcuts import render
 import random
-from datetime import datetime, timedelta
+from datetime import timedelta
+from django.utils import timezone
 
 # List of daily specials
 daily_specials = [
@@ -79,7 +80,7 @@ def confirmation(request):
         total_price += 33
 
     # Choose a random time for order to be "ready" at
-    ready_time = datetime.now() + timedelta(minutes=random.randint(20, 40))
+    ready_time = timezone.localtime() + timedelta(minutes=random.randint(20, 40))
 
     # Aggregate context for confirmation page
     context = {
