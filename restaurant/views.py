@@ -4,6 +4,7 @@
 
 from django.shortcuts import render
 import random
+from datetime import datetime, timedelta
 
 # List of daily specials
 daily_specials = [
@@ -77,6 +78,9 @@ def confirmation(request):
         ordered_items.append({'name': 'Daily Special', 'price': 33})
         total_price += 33
 
+    # Choose a random time for order to be "ready" at
+    ready_time = datetime.now() + timedelta(minutes=random.randint(20, 40))
+
     # Aggregate context for confirmation page
     context = {
         'name': name,
@@ -85,5 +89,6 @@ def confirmation(request):
         'special_instructions': special_instructions,
         'ordered_items': ordered_items,
         'total_price': total_price,
+        'ready_time': ready_time.strftime('%-I:%M %p'),
     }
     return render(request, 'restaurant/confirmation.html', context)
