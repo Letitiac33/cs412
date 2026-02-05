@@ -1,0 +1,60 @@
+<!-- File: order.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/3/2026 -->
+<!-- Order page for Sealy's Restaurant webapp -->
+
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Place an Order</h2>
+
+<h3>Our Menu:</h3>
+<form action="{% url 'confirmation' %}" method="post">
+    {% csrf_token %}
+
+    <!-- Display all menu items with checkboxes. -->
+    {% for key, item in menu.items %}
+    <div>
+        <input type="checkbox" name="{{ key }}" id="{{ key }}">
+        <label for="{{ key }}">{{ item.name }} - ${{ item.price }}</label>
+        <!-- Show item options, if any -->
+        {% if item.options %}
+        <div style="margin-left: 20px;">
+            {% for option in item.options %}
+            <input type="checkbox" name="{{ key }}_{{ option }}" id="{{ key }}_{{ option }}">
+            <label for="{{ key }}_{{ option }}">{{ option }}</label>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Shows the random daily special as a menu item -->
+    <div>
+        <input type="checkbox" name="daily_special" id="daily_special">
+        <label for="daily_special">Daily Special: {{ daily_special }} - $33</label>
+    </div>
+
+    <h3>Special Instructions:</h3>
+    <div>
+        <label for="special_instructions">Please share any special instructions or alergies:</label>
+        <textarea name="special_instructions" id="special_instructions"></textarea>
+    </div>
+
+    <h3>Customer Information:</h3>
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required>
+    </div>
+    <div>
+        <label for="phone">Phone:</label>
+        <input type="tel" name="phone" id="phone" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email">
+    </div>
+
+    <button type="submit">Place Order</button>
+</form>
+{% endblock %}

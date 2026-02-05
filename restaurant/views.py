@@ -62,11 +62,16 @@ def confirmation(request):
     # Check which menu items were ordered and calculate total price
     ordered_items = []
     total_price = 0.0
-    for item in menu:
+    for key, item in menu.items():
         # If request contains menu item, add it to total
-        if request.POST.get(item):
-            ordered_items.append(item)
+        if request.POST.get(key):
+            ordered_items.append({'name': item['name'], 'price': item['price']})
             total_price += item['price']
+
+    # If they ordered daily special, add it
+    if request.POST.get('daily_special'):
+        ordered_items.append({'name': 'Daily Special', 'price': 33})
+        total_price += 33
 
     # Aggregate context for confirmation page
     context = {
