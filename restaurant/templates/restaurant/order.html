@@ -21,7 +21,7 @@
         {% if item.options %}
         <div style="margin-left: 20px;">
             {% for option in item.options %}
-            <input type="checkbox" name="{{ key }}_{{ option }}" id="{{ key }}_{{ option }}">
+            <input type="checkbox" name="{{ key }}_option" value="{{ option }}" id="{{ key }}_{{ option }}">
             <label for="{{ key }}_{{ option }}">{{ option }}</label>
             {% endfor %}
         </div>
@@ -57,4 +57,23 @@
 
     <button type="submit">Place Order</button>
 </form>
+
+<script>
+    const fishCheckbox = document.getElementById('fish_and_chips');
+    const sauceCheckboxes = document.querySelectorAll('input[name="fish_and_chips_option"]');
+
+    // Checking a sauce checks the fish and chips box
+    sauceCheckboxes.forEach(function(cb) {
+        cb.addEventListener('change', function() {
+            if (cb.checked) fishCheckbox.checked = true;
+        });
+    });
+
+    // Unchecking fish and chips unchecks all sauces
+    fishCheckbox.addEventListener('change', function() {
+        if (!fishCheckbox.checked) {
+            sauceCheckboxes.forEach(function(cb) { cb.checked = false; });
+        }
+    });
+</script>
 {% endblock %}

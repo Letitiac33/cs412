@@ -11,8 +11,17 @@
 
 <h3>Order Details:</h3>
 <ul>
+    <!-- List all items ordered, with all options, if any -->
     {% for item in ordered_items %}
-    <li>{{ item.name }} - ${{ item.price }}</li>
+    <li>{{ item.name }} - ${{ item.price }}
+        {% if item.options %}
+        <ul>
+            {% for option in item.options %}
+            <li>{{ option }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </li>
     {% empty %}
     <li>No items ordered</li>
     {% endfor %}
@@ -20,14 +29,14 @@
 
 <p><strong>Total: ${{ total_price }}</strong></p>
 
-<h3>Customer Information:</h3>
-<p>Name: {{ name }}</p>
-<p>Phone: {{ phone }}</p>
-<p>Email: {{ email }}</p>
-
 {% if special_instructions %}
 <h3>Special Instructions:</h3>
 <p>{{ special_instructions }}</p>
 {% endif %}
+
+<h3>Customer Information:</h3>
+<p>Name: {{ name }}</p>
+<p>Phone: {{ phone }}</p>
+<p>Email: {{ email }}</p>
 
 {% endblock %}

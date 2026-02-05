@@ -65,7 +65,11 @@ def confirmation(request):
     for key, item in menu.items():
         # If request contains menu item, add it to total
         if request.POST.get(key):
-            ordered_items.append({'name': item['name'], 'price': item['price']})
+            ordered_item = {'name': item['name'], 'price': item['price']}
+            # Collect selected options for confirmation page
+            if 'options' in item:
+                ordered_item['options'] = request.POST.getlist(f'{key}_option')
+            ordered_items.append(ordered_item)
             total_price += item['price']
 
     # If they ordered daily special, add it
