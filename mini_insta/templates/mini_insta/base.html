@@ -1,0 +1,35 @@
+<!-- File: base.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/12/2026 -->
+<!-- Base page for mini_insta web app. Contains header and
+navigation panel shared across all pages -->
+
+<!-- Load static allows access to style.css file -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Makes webapp responsive for mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Insta</title>
+    <link rel="stylesheet" href="{% static 'mini_insta/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Mini Insta</h1>
+        <nav>
+            <!-- Navigation to other pages -->
+            <a href="{% url 'show_all_profiles' %}">Profiles</a>
+        </nav>
+    </header>
+
+    <!-- Page content is provided by the specific HTML page extending this base page -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer>
+        <h3> Mini Insta created by Letitia Caspersen for BU-CS-412 </h3>
+    </footer>
+</body>
+</html>
