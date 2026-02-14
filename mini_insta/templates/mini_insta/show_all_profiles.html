@@ -10,10 +10,12 @@
     <!-- Loops through and displays each profile with image, username, and display name -->
     {% for profile in profiles %}
         <div class="profile_card">
-            <!-- Displays profile image. If image is, missing displays text "Profile Image" -->
-            <img src="{{ profile.profile_image_url }}" alt="Profile Image">
+            <!-- Links profile image and display name to the profile detail page -->
+            <a href="{% url 'show_profile' profile.pk %}">
+                <img src="{{ profile.profile_image_url }}" alt="Profile Image">
+            </a>
             <p>{{profile.username}}</p>
-            <p>{{profile.display_name}}</p>
+            <a href="{% url 'show_profile' profile.pk %}">{{profile.display_name}}</a>
         </div>
     {% endfor %}
 </div>

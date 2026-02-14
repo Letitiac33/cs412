@@ -1,6 +1,8 @@
-from django.db import models
+# File: models.py
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/12/2026
+# Description: Data models for the mini_insta application
 
-# Create your models here.
+from django.db import models
 
 class Profile(models.Model):
     username = models.CharField(max_length=32, unique=True)

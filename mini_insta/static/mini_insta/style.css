@@ -1,0 +1,87 @@
+/*
+ * File: style.css
+ * Author: Letitia Caspersen (letitiac@bu.edu), 2/13/2026
+ * Description: Stylesheet for Mini Insta webapp
+ */
+
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #262626;
+}
+
+/* Header Section */
+header {
+    background-color: #262626;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Navigation */
+nav a {
+    color: #c2a4f8;
+    text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 12px;
+    border: 1px solid #c2a4f8;
+    border-radius: 3px;
+}
+
+nav a:hover {
+    background-color: #c2a4f8;
+    color: #262626;
+}
+
+/* Main Content Area */
+.content {
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+}
+
+/* Headings */
+h2 {
+    color: #262626;
+}
+
+/* Profile Grid */
+.profile_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+}
+
+.profile_card {
+    text-align: center;
+    padding: 10px;
+}
+
+.profile_card img {
+    width: 100px;
+}
+
+.profile_card a {
+    color: #262626;
+    text-decoration: none;
+}
+
+/* Single Profile Page */
+.profile_detail {
+    text-align: center;
+}
+
+.profile_detail img {
+    width: 200px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    color: #999;
+}

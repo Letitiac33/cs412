@@ -1,0 +1,15 @@
+<!-- File: show_profile.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/13/2026 -->
+<!-- HTML page for mini insta, showing a single profile -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="profile_detail">
+    <img src="{{ profile.profile_image_url }}" alt="Profile Image">
+    <h2>{{ profile.display_name }}</h2>
+    <p>{{ profile.username }}</p>
+    <p>{{ profile.bio_text }}</p>
+    <p>Joined: {{ profile.join_date }}</p>
+</div>
+{% endblock %}
