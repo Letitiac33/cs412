@@ -1,8 +1,9 @@
 <!-- File: show_profile.html -->
-<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/13/2026 -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026 -->
 <!-- HTML page for mini insta, showing a single profile -->
 
 {% extends 'mini_insta/base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="profile_detail">
@@ -11,5 +12,22 @@
     <p>{{ profile.username }}</p>
     <p>{{ profile.bio_text }}</p>
     <p>Joined: {{ profile.join_date }}</p>
+</div>
+
+<div class="posts">
+    <h3>Posts</h3>
+    {% for post in profile.get_all_posts %}
+    <div class="post">
+        {% with post.get_all_photos as photos %}
+        {% if photos %}
+            <img src="{{ photos.0.image_url }}" alt="Post Image">
+        {% else %}
+            <img src="{% static 'mini_insta/no_image.jpg' %}" alt="No Image">
+        {% endif %}
+        {% endwith %}
+        <p>{{ post.caption }}</p>
+        <p><small>{{ post.timestamp }}</small></p>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
