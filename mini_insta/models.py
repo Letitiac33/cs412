@@ -13,6 +13,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile: username='{self.username}', display name='{self.display_name}',"
+    
+    def get_all_posts(self):
+         '''Return all of the posts on this profile.'''
+         posts = Post.objects.filter(profile=self)
+         return posts
 
 class Post(models.Model):
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
@@ -21,6 +26,12 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post: profile='{self.profile}', timestamp='{self.timestamp}'"
+    
+    def get_all_photos(self):
+        '''Return all of the photos on this post.'''
+        photos = Photo.objects.filter(post=self)
+        return photos
+
 
 class Photo(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
