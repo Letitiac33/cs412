@@ -5,6 +5,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Profile
+from .models import Post
 
 class ProfileListView(ListView):
     '''Create a subclass of ListView to display all mini insta profiles.'''
@@ -17,3 +18,9 @@ class ProfileDetailView(DetailView):
     model = Profile
     template_name = 'mini_insta/show_profile.html'
     context_object_name = 'profile'
+
+class PostDetailView(DetailView):
+    '''Create a subclass of DetailView to display a single mini insta post.'''
+    model = Post
+    template_name = 'mini_insta/show_post.html'
+    context_object_name = 'post'
