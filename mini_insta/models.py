@@ -1,5 +1,5 @@
 # File: models.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/12/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026
 # Description: Data models for the mini_insta application
 
 from django.db import models
@@ -13,3 +13,19 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile: username='{self.username}', display name='{self.display_name}',"
+
+class Post(models.Model):
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    caption = models.TextField(max_length=256,blank=True)
+
+    def __str__(self):
+        return f"Post: profile='{self.profile}', timestamp='{self.timestamp}'"
+
+class Photo(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    image_url = models.URLField(max_length=256)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Photo: post='{self.post}', image url = '{self.image_url}'"
