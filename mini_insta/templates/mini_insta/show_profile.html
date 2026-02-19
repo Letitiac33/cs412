@@ -27,6 +27,7 @@
         {% endwith %}
         <p>{{ post.caption }}</p>
         <p><small>{{ post.timestamp }}</small></p>
+        <a href="{% url 'show_post' post.pk %}">View post</a>
     </div>
     {% endfor %}
 </div>

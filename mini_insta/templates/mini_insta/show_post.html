@@ -6,5 +6,25 @@
 {% load static %}
 
 {% block content %}
+<div class="post_detail">
+    <h2>Post by {{ post.profile.display_name }}</h2>
+    <p>{{ post.caption }}</p>
+    <p><small>{{ post.timestamp }}</small></p>
 
+    <div class="photo_grid">
+        {% with post.get_all_photos as photos %}
+        {% if photos %}
+            {% for photo in photos %}
+            <div class="photo">
+                <img src="{{ photo.image_url }}" alt="Post Photo">
+            </div>
+            {% endfor %}
+        {% else %}
+            <img src="{% static 'mini_insta/no_image.jpg' %}" alt="No Image">
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <a href="{% url 'show_profile' post.profile.pk %}">Back to profile</a>
+</div>
 {% endblock %}
