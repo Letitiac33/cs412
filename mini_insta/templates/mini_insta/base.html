@@ -29,6 +29,11 @@ navigation panel shared across all pages -->
         {% endblock %}
     </div>
     <footer>
+        {% if profile %}
+        <nav>
+            <a href="{% url 'create_post' profile.pk %}">Create Post</a>
+        </nav>
+        {% endif %}
         <h3> Mini Insta created by Letitia Caspersen for BU-CS-412 </h3>
     </footer>
 </body>
