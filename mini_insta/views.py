@@ -1,5 +1,5 @@
 # File: views.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/12/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026
 # Description: Views for the mini_insta application
 
 from django.shortcuts import render

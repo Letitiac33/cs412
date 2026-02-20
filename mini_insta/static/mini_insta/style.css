@@ -79,6 +79,157 @@ h2 {
     width: 200px;
 }
 
+/* Posts Section on Profile Page */
+.posts {
+    margin-top: 30px;
+}
+
+.posts h3 {
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.posts .post {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.posts .post img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.posts .post p {
+    margin: 0 0 6px 0;
+}
+
+.posts .post a {
+    color: #c2a4f8;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.posts .post a:hover {
+    text-decoration: underline;
+}
+
+/* Post Detail Page */
+.post_detail {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.post_detail h2 {
+    margin-bottom: 4px;
+}
+
+.post_detail p {
+    margin: 6px 0;
+    color: #555;
+}
+
+.photo_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.photo_grid img,
+.post_detail > img {
+    width: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.post_detail a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #c2a4f8;
+    text-decoration: none;
+}
+
+.post_detail a:hover {
+    text-decoration: underline;
+}
+
+/* Create Post Form */
+.create_post {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.create_post h2 {
+    margin-bottom: 20px;
+}
+
+.form_field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.form_field label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #262626;
+}
+
+.form_field input,
+.form_field textarea {
+    padding: 8px 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.form_field input:focus,
+.form_field textarea:focus {
+    outline: none;
+    border-color: #c2a4f8;
+}
+
+.form_buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form_buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.form_buttons button[type="submit"] {
+    background-color: #c2a4f8;
+    color: #262626;
+}
+
+.form_buttons button[type="submit"]:hover {
+    background-color: #a97ef5;
+}
+
+.form_buttons button[type="button"] {
+    background-color: #e0e0e0;
+    color: #262626;
+}
+
+.form_buttons button[type="button"]:hover {
+    background-color: #c8c8c8;
+}
+
 /* Footer */
 footer {
     text-align: center;

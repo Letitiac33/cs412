@@ -1,80 +1,236 @@
-/* File: style.css */
-/* Author: Letitia Caspersen (letitiac@bu.edu), 2/13/2026 */
-/* Stylesheet for mini_insta web app */
+/*
+ * File: style.css
+ * Author: Letitia Caspersen (letitiac@bu.edu), 2/13/2026
+ * Description: Stylesheet for Mini Insta webapp
+ */
 
+/* Base Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #fafafa;
+    color: #262626;
 }
 
+/* Header Section */
 header {
     background-color: #262626;
     color: white;
-    padding: 15px 20px;
+    padding: 20px;
     text-align: center;
 }
 
-header a {
-    color: white;
+/* Navigation */
+nav a {
+    color: #c2a4f8;
     text-decoration: none;
+    margin: 0 10px;
+    padding: 5px 12px;
+    border: 1px solid #c2a4f8;
+    border-radius: 3px;
 }
 
-nav {
-    margin-top: 5px;
+nav a:hover {
+    background-color: #c2a4f8;
+    color: #262626;
 }
 
+/* Main Content Area */
 .content {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 0 20px;
+    max-width: 700px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
 }
 
-/* Profile grid on show_all_profiles page */
+/* Headings */
+h2 {
+    color: #262626;
+}
+
+/* Profile Grid */
 .profile_grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
 }
 
 .profile_card {
-    background-color: white;
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    padding: 15px;
     text-align: center;
+    padding: 10px;
 }
 
 .profile_card img {
     width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .profile_card a {
     color: #262626;
     text-decoration: none;
-    font-weight: bold;
 }
 
-/* Single profile detail page */
+/* Single Profile Page */
 .profile_detail {
-    background-color: white;
-    border: 1px solid #dbdbdb;
-    border-radius: 5px;
-    padding: 25px;
     text-align: center;
 }
 
 .profile_detail img {
     width: 200px;
-    height: 200px;
-    border-radius: 50%;
+}
+
+/* Posts Section on Profile Page */
+.posts {
+    margin-top: 30px;
+}
+
+.posts h3 {
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+}
+
+.posts .post {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.posts .post img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.posts .post p {
+    margin: 0 0 6px 0;
+}
+
+.posts .post a {
+    color: #c2a4f8;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.posts .post a:hover {
+    text-decoration: underline;
+}
+
+/* Post Detail Page */
+.post_detail {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.post_detail h2 {
+    margin-bottom: 4px;
+}
+
+.post_detail p {
+    margin: 6px 0;
+    color: #555;
+}
+
+.photo_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+}
+
+.photo_grid img,
+.post_detail > img {
+    width: 100%;
+    border-radius: 4px;
     object-fit: cover;
 }
 
+.post_detail a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #c2a4f8;
+    text-decoration: none;
+}
+
+.post_detail a:hover {
+    text-decoration: underline;
+}
+
+/* Create Post Form */
+.create_post {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.create_post h2 {
+    margin-bottom: 20px;
+}
+
+.form_field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.form_field label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #262626;
+}
+
+.form_field input,
+.form_field textarea {
+    padding: 8px 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    font-size: 1em;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.form_field input:focus,
+.form_field textarea:focus {
+    outline: none;
+    border-color: #c2a4f8;
+}
+
+.form_buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form_buttons button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.form_buttons button[type="submit"] {
+    background-color: #c2a4f8;
+    color: #262626;
+}
+
+.form_buttons button[type="submit"]:hover {
+    background-color: #a97ef5;
+}
+
+.form_buttons button[type="button"] {
+    background-color: #e0e0e0;
+    color: #262626;
+}
+
+.form_buttons button[type="button"]:hover {
+    background-color: #c8c8c8;
+}
+
+/* Footer */
 footer {
     text-align: center;
     padding: 15px;
