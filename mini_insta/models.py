@@ -3,6 +3,7 @@
 # Description: Data models for the mini_insta application
 
 from django.db import models
+from django.urls import reverse
 
 class Profile(models.Model):
     username = models.CharField(max_length=32, unique=True)
@@ -31,6 +32,10 @@ class Post(models.Model):
         '''Return all of the photos on this post.'''
         photos = Photo.objects.filter(post=self)
         return photos
+
+    def get_absolute_url(self):
+        '''Return the URL to display this post.'''
+        return reverse('show_post', kwargs={'pk': self.pk})
 
 
 class Photo(models.Model):
