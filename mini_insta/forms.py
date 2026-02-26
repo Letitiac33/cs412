@@ -8,7 +8,6 @@ from .models import *
 class CreatePostForm(forms.ModelForm):
     '''A form to add a post to the database.'''
 
-    image_url = forms.URLField(label='Image URL', required=False)
     image_file = forms.ImageField(label='Image File', required=False)
 
     class Meta:
