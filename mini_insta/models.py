@@ -45,7 +45,7 @@ class Photo(models.Model):
     image_file = models.ImageField(blank=True)
 
     def __str__(self):
-        return f"Photo: post='{self.post}', image url = '{self.get_image_url(self)}'"
+        return f"Photo: post='{self.post}', image url = '{self.get_image_url()}'"
     
     def get_image_url(self):
         if (self.image_url != None):
