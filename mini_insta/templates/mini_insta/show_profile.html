@@ -20,7 +20,7 @@
     <div class="post">
         {% with post.get_all_photos as photos %}
         {% if photos %}
-            <img src="{{ photos.0.image_url }}" alt="Post Image">
+            <img src="{{ photos.0.get_image_url }}" alt="Post Image">
         {% else %}
             <img src="{% static 'mini_insta/no_image.jpg' %}" alt="No Image">
         {% endif %}

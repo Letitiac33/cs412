@@ -48,7 +48,7 @@ class Photo(models.Model):
         return f"Photo: post='{self.post}', image url = '{self.get_image_url()}'"
     
     def get_image_url(self):
-        if (self.image_url != None):
+        if self.image_url:
             return self.image_url
-        else: 
+        else:
             return self.image_file.url

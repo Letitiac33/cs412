@@ -16,7 +16,7 @@
         {% if photos %}
             {% for photo in photos %}
             <div class="photo">
-                <img src="{{ photo.image_url }}" alt="Post Photo">
+                <img src="{{ photo.get_image_url }}" alt="Post Photo">
             </div>
             {% endfor %}
         {% else %}
