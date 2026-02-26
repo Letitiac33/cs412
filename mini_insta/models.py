@@ -1,5 +1,5 @@
 # File: models.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/26/2026
 # Description: Data models for the mini_insta application
 
 from django.db import models
@@ -48,6 +48,7 @@ class Photo(models.Model):
         return f"Photo: post='{self.post}', image url = '{self.get_image_url()}'"
     
     def get_image_url(self):
+        '''Return the appropriate image url based on upload method used.'''
         if self.image_url:
             return self.image_url
         else:

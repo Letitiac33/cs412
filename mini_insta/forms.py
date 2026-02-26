@@ -1,5 +1,5 @@
 # File: forms.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/26/2026
 # Description: Forms for the mini_insta application
 
 from django import forms
