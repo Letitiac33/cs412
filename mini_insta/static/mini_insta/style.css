@@ -199,15 +199,21 @@ h2 {
 }
 
 .post_detail p {
-    margin: 6px 0;
+    margin: 4px 0;
     color: #555;
+}
+
+.post_detail .post_actions {
+    margin-top: 24px;
+    display: flex;
+    gap: 10px;
 }
 
 .photo_grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 10px;
-    margin: 16px 0;
+    margin: 6px 0;
 }
 
 .photo_grid img,

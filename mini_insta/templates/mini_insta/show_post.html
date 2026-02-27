@@ -8,7 +8,6 @@
 {% block content %}
 <div class="post_detail">
     <h2>@{{ post.profile.username }}</h2>
-    <p>{{ post.caption }}</p>
     <p><small>{{ post.timestamp }}</small></p>
 
     <div class="photo_grid">
@@ -25,7 +24,12 @@
         {% endwith %}
     </div>
 
-    <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
-    <a href="{% url 'delete_post' post.pk %}"><button type="button">Delete</button></a>
+    <p>{{ post.caption }}</p>
+
+    <div class="post_actions">
+        <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
+        <a href="{% url 'update_post' post.pk %}"><button type="button">Edit</button></a>
+        <a href="{% url 'delete_post' post.pk %}"><button type="button">Delete</button></a>
+    </div>
 </div>
 {% endblock %}

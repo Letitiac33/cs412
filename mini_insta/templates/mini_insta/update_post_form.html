@@ -1,0 +1,27 @@
+<!-- File: update_post_form.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, form to update a post -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="create_post">
+    <h2>Edit Post</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form_field">
+            <label for="caption">Caption:</label>
+            {{ form.caption }}
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Save</button>
+            <a href="{% url 'show_post' post.pk %}">
+                <button type="button">Cancel</button>
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
