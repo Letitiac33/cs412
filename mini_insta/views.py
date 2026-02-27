@@ -1,11 +1,11 @@
 # File: views.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026
 # Description: Views for the mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 
 class ProfileListView(ListView):
     '''Create a subclass of ListView to display all mini insta profiles.'''
@@ -53,3 +53,9 @@ class CreatePostView(CreateView):
             Photo.objects.create(post=self.object, image_file=image_file)
 
         return response
+    
+class UpdateProfileView(UpdateView):
+    template_name = 'mini_insta/update_profile_form.html'
+    form_class = UpdateProfileForm
+    model = Profile
+    context_object_name = 'profile'

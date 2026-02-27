@@ -1,0 +1,37 @@
+<!-- File: update_profile_form.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, form to update a profile -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="update_profile">
+    <h2>Update Profile of {{ profile.display_name }}</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'update_profile' profile.pk %}">
+        {% csrf_token %}
+
+        <div class="form_field">
+            <label for="display_name">Display Name:</label>
+            {{ form.display_name }}
+        </div>
+
+        <div class="form_field">
+            <label for="bio_text">Bio Text:</label>
+            {{ form.bio_text }}
+        </div>
+
+        <div class="form_field">
+            <label for="profile_image_url">Profile Image URL:</label>
+            {{ form.profile_image_url }}
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Update</button>
+            <a href="{% url 'show_profile' profile.pk %}">
+                <button type="button">Cancel</button>
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

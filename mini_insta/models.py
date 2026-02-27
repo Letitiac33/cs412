@@ -1,5 +1,5 @@
 # File: models.py
-# Author: Letitia Caspersen (letitiac@bu.edu), 2/26/2026
+# Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026
 # Description: Data models for the mini_insta application
 
 from django.db import models
@@ -19,6 +19,10 @@ class Profile(models.Model):
          '''Return all of the posts on this profile.'''
          posts = Post.objects.filter(profile=self)
          return posts
+    
+    def get_absolute_url(self):
+        '''Return the URL to display this profile.'''
+        return reverse('show_profile', kwargs={'pk': self.pk})
 
 class Post(models.Model):
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)

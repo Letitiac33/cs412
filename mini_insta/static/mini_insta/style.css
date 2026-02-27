@@ -230,6 +230,22 @@ h2 {
     background-color: #c8c8c8;
 }
 
+/* Profile Action Buttons */
+.profile_detail button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #c2a4f8;
+    color: #262626;
+    margin-top: 10px;
+}
+
+.profile_detail button:hover {
+    background-color: #a97ef5;
+}
+
 /* Footer */
 footer {
     text-align: center;
