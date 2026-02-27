@@ -1,0 +1,23 @@
+<!-- File: delete_post_form.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, form to confirm deletion of a post -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="post_detail">
+    <h2>Delete Post by {{ profile.display_name }}</h2>
+    <p>Are you sure you want to delete this post?</p>
+
+    <div class="form_buttons">
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+
+        <form method="GET" action="{% url 'show_profile' profile.pk %}">
+            <button type="submit">Cancel</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -8,28 +8,28 @@
 {% block content %}
 <div class="profile_detail">
     <img src="{{ profile.profile_image_url }}" alt="Profile Image">
-    <h2>{{ profile.display_name }}</h2>
-    <p>{{ profile.username }}</p>
-    <p>{{ profile.bio_text }}</p>
-    <p>Joined: {{ profile.join_date }}</p>
-    <a href="{% url 'update_profile' profile.pk %}"><button type="button">Update Profile</button></a>
+    <div class="profile_info">
+        <p class="profile_username">@{{ profile.username }}</p>
+        <h2>{{ profile.display_name }}</h2>
+        <p class="profile_bio">{{ profile.bio_text }}</p>
+        <a href="{% url 'update_profile' profile.pk %}"><button type="button">Update Profile</button></a>
+    </div>
 </div>
 
 <div class="posts">
     <h3>Posts</h3>
-    {% for post in profile.get_all_posts %}
-    <div class="post">
-        {% with post.get_all_photos as photos %}
-        {% if photos %}
-            <img src="{{ photos.0.get_image_url }}" alt="Post Image">
-        {% else %}
-            <img src="{% static 'mini_insta/no_image.jpg' %}" alt="No Image">
-        {% endif %}
-        {% endwith %}
-        <p>{{ post.caption }}</p>
-        <p><small>{{ post.timestamp }}</small></p>
-        <a href="{% url 'show_post' post.pk %}">View post</a>
+    <div class="post_grid">
+        {% for post in profile.get_all_posts %}
+        <a href="{% url 'show_post' post.pk %}" class="post_grid_item">
+            {% with post.get_all_photos as photos %}
+            {% if photos %}
+                <img src="{{ photos.0.get_image_url }}" alt="Post Image">
+            {% else %}
+                <img src="{% static 'mini_insta/no_image.jpg' %}" alt="No Image">
+            {% endif %}
+            {% endwith %}
+        </a>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 {% endblock %}

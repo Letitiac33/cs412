@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="post_detail">
-    <h2>Post by {{ post.profile.display_name }}</h2>
+    <h2>@{{ post.profile.username }}</h2>
     <p>{{ post.caption }}</p>
     <p><small>{{ post.timestamp }}</small></p>
 
@@ -25,6 +25,7 @@
         {% endwith %}
     </div>
 
-    <a href="{% url 'show_profile' post.profile.pk %}">Back to profile</a>
+    <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
+    <a href="{% url 'delete_post' post.pk %}"><button type="button">Delete</button></a>
 </div>
 {% endblock %}

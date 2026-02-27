@@ -3,7 +3,8 @@
 # Description: Views for the mini_insta application
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
 
@@ -59,3 +60,19 @@ class UpdateProfileView(UpdateView):
     form_class = UpdateProfileForm
     model = Profile
     context_object_name = 'profile'
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'mini_insta/delete_post_form.html'
+
+    def get_context_data(self, **kwargs):
+        '''Build the context with post and profile'''
+        context = super().get_context_data(**kwargs)
+        post = self.object
+        context['post'] = post
+        context['profile'] = post.profile
+        return context
+
+    def get_success_url(self):
+        '''Redirect to the profile page after a successful delete.'''
+        return reverse('show_profile', kwargs={'pk': self.object.profile.pk})

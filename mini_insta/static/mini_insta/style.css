@@ -6,42 +6,57 @@
 
 /* Base Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #fafafa;
+    padding: 0 0 60px 0;
+    background-color: #f0f0f0;
     color: #262626;
 }
 
 /* Header Section */
 header {
-    background-color: #262626;
-    color: white;
-    padding: 20px;
-    text-align: center;
+    background-color: #fff;
+    border-bottom: 1px solid #dbdbdb;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    font-style: italic;
+    color: #262626;
+    letter-spacing: -0.5px;
 }
 
 /* Navigation */
 nav a {
-    color: #c2a4f8;
+    color: #262626;
     text-decoration: none;
-    margin: 0 10px;
-    padding: 5px 12px;
-    border: 1px solid #c2a4f8;
-    border-radius: 3px;
+    margin: 0 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    background-color: #c2a4f8;
+    transition: background-color 0.2s;
 }
 
 nav a:hover {
-    background-color: #c2a4f8;
+    background-color: #a97ef5;
     color: #262626;
 }
 
 /* Main Content Area */
 .content {
-    max-width: 700px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: white;
+    max-width: 680px;
+    margin: 24px auto;
+    padding: 0 16px;
 }
 
 /* Headings */
@@ -53,81 +68,134 @@ h2 {
 .profile_grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 15px;
+    gap: 16px;
 }
 
 .profile_card {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
     text-align: center;
-    padding: 10px;
+    padding: 20px 10px;
+    transition: box-shadow 0.2s;
+}
+
+.profile_card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .profile_card img {
-    width: 100px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #c2a4f8;
 }
 
 .profile_card a {
     color: #262626;
     text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
 }
 
 /* Single Profile Page */
 .profile_detail {
-    text-align: center;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
 }
 
 .profile_detail img {
-    width: 200px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #c2a4f8;
+    flex-shrink: 0;
+}
+
+.profile_detail .profile_info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile_detail h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.profile_username {
+    margin: 0;
+    color: #c2a4f8;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.profile_bio {
+    margin: 0;
+    color: #555;
+    font-size: 0.95em;
 }
 
 /* Posts Section on Profile Page */
 .posts {
-    margin-top: 30px;
+    margin-top: 24px;
 }
 
 .posts h3 {
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #999;
     border-bottom: 1px solid #dbdbdb;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
     margin-bottom: 16px;
 }
 
-.posts .post {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid #dbdbdb;
+.post_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
 }
 
-.posts .post img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
+.post_grid_item {
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
     border-radius: 4px;
-    flex-shrink: 0;
 }
 
-.posts .post p {
-    margin: 0 0 6px 0;
+.post_grid_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s;
 }
 
-.posts .post a {
-    color: #c2a4f8;
-    text-decoration: none;
-    font-size: 0.9em;
-}
-
-.posts .post a:hover {
-    text-decoration: underline;
+.post_grid_item:hover img {
+    opacity: 0.8;
 }
 
 /* Post Detail Page */
 .post_detail {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 24px;
     max-width: 600px;
     margin: 0 auto;
 }
 
 .post_detail h2 {
-    margin-bottom: 4px;
+    margin: 0 0 8px 0;
 }
 
 .post_detail p {
@@ -145,29 +213,24 @@ h2 {
 .photo_grid img,
 .post_detail > img {
     width: 100%;
-    border-radius: 4px;
+    border-radius: 8px;
     object-fit: cover;
 }
 
-.post_detail a {
-    display: inline-block;
-    margin-top: 12px;
-    color: #c2a4f8;
-    text-decoration: none;
-}
-
-.post_detail a:hover {
-    text-decoration: underline;
-}
-
-/* Create Post Form */
-.create_post {
+/* Forms */
+.create_post,
+.update_profile {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 12px;
+    padding: 28px;
     max-width: 500px;
     margin: 0 auto;
 }
 
-.create_post h2 {
-    margin-bottom: 20px;
+.create_post h2,
+.update_profile h2 {
+    margin: 0 0 20px 0;
 }
 
 .form_field {
@@ -177,25 +240,40 @@ h2 {
 }
 
 .form_field label {
-    font-weight: bold;
+    font-weight: 600;
     margin-bottom: 6px;
+    font-size: 0.9em;
     color: #262626;
 }
 
 .form_field input,
 .form_field textarea {
-    padding: 8px 10px;
+    padding: 10px 12px;
     border: 1px solid #dbdbdb;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1em;
     font-family: inherit;
     resize: vertical;
+    background-color: #fafafa;
 }
 
 .form_field input:focus,
 .form_field textarea:focus {
     outline: none;
     border-color: #c2a4f8;
+    background-color: #fff;
+}
+
+/* Shared Button Style */
+button {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background-color 0.2s;
 }
 
 .form_buttons {
@@ -204,20 +282,18 @@ h2 {
     margin-top: 20px;
 }
 
-.form_buttons button {
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-}
-
-.form_buttons button[type="submit"] {
+.form_buttons button[type="submit"],
+.post_detail button,
+.posts .post button,
+.profile_detail button {
     background-color: #c2a4f8;
     color: #262626;
 }
 
-.form_buttons button[type="submit"]:hover {
+.form_buttons button[type="submit"]:hover,
+.post_detail button:hover,
+.posts .post button:hover,
+.profile_detail button:hover {
     background-color: #a97ef5;
 }
 
@@ -230,25 +306,42 @@ h2 {
     background-color: #c8c8c8;
 }
 
-/* Profile Action Buttons */
-.profile_detail button {
-    padding: 8px 20px;
-    border: none;
-    border-radius: 4px;
-    font-size: 1em;
-    cursor: pointer;
-    background-color: #c2a4f8;
-    color: #262626;
-    margin-top: 10px;
-}
-
-.profile_detail button:hover {
-    background-color: #a97ef5;
-}
-
 /* Footer */
 footer {
-    text-align: center;
-    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border-top: 1px solid #dbdbdb;
     color: #999;
+    text-align: center;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+footer h3 {
+    margin: 0;
+    font-size: 0.8em;
+    font-weight: normal;
+    color: #999;
+}
+
+footer nav a {
+    background-color: #c2a4f8;
+    color: #262626;
+    font-weight: 600;
+    font-size: 0.9em;
+    border-radius: 20px;
+    padding: 6px 16px;
+    text-decoration: none;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+footer nav a:hover {
+    background-color: #a97ef5;
 }
