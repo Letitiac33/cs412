@@ -242,6 +242,33 @@ h2 {
     object-fit: cover;
 }
 
+/* Comments Section */
+.comments {
+    margin-top: 12px;
+    border-top: 1px solid #dbdbdb;
+    padding-top: 12px;
+}
+
+.comment {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9em;
+}
+
+.comment_username {
+    font-weight: 700;
+    color: #262626;
+    flex-shrink: 0;
+}
+
+.comment_text {
+    color: #444;
+    flex: 1;
+}
+
 /* Forms */
 .create_post,
 .update_profile {

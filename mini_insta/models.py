@@ -13,7 +13,7 @@ class Profile(models.Model):
     join_date = models.DateField(auto_now=False,auto_now_add=True)
 
     def __str__(self):
-        return f"Profile: username='{self.username}', display name='{self.display_name}',"
+        return f"{self.username}"
     
     def get_all_posts(self):
          '''Return all of the posts on this profile.'''
@@ -48,12 +48,17 @@ class Post(models.Model):
     caption = models.TextField(max_length=256,blank=True)
 
     def __str__(self):
-        return f"Post: profile='{self.profile}', timestamp='{self.timestamp}'"
+        return f"Post: '{self.profile}: {self.caption}'"
     
     def get_all_photos(self):
         '''Return all of the photos on this post.'''
         photos = Photo.objects.filter(post=self)
         return photos
+    
+    def get_all_comments(self):
+        '''Return all of the comments on this post.'''
+        comments = Comment.objects.filter(post=self)
+        return comments
 
     def get_absolute_url(self):
         '''Return the URL to display this post.'''
@@ -67,7 +72,7 @@ class Photo(models.Model):
     image_file = models.ImageField(blank=True)
 
     def __str__(self):
-        return f"Photo: post='{self.post}', image url = '{self.get_image_url()}'"
+        return f"Photo: '{self.post} Picture: {self.pk}'"
     
     def get_image_url(self):
         '''Return the appropriate image url based on upload method used.'''
@@ -82,4 +87,13 @@ class Follow(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.follower_profile.display_name} follows {self.profile.display_name}"
+        return f"{self.follower_profile} follows {self.profile}"
+    
+class Comment(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+    text = models.TextField(max_length=512,blank=True)
+
+    def __str__(self):
+        return f"Comment: '{self.profile.username}: {self.text}'"

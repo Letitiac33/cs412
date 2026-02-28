@@ -26,6 +26,15 @@
 
     <p>{{ post.caption }}</p>
 
+    <div class="comments">
+        {% for comment in post.get_all_comments %}
+        <div class="comment">
+            <span class="comment_username">@{{ comment.profile.username }}</span>
+            <span class="comment_text">{{ comment.text }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
     <div class="post_actions">
         <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
         <a href="{% url 'update_post' post.pk %}"><button type="button">Edit</button></a>
