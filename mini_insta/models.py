@@ -20,6 +20,24 @@ class Profile(models.Model):
          posts = Post.objects.filter(profile=self)
          return posts
     
+    def get_followers(self):
+        '''Return a list of Profiles who follow this profile.'''
+        follows = Follow.objects.filter(profile=self)
+        return [follow.follower_profile for follow in follows]
+
+    def get_num_followers(self):
+        '''Return the number of followers for this profile.'''
+        return Follow.objects.filter(profile=self).count()
+
+    def get_following(self):
+        '''Return a list of Profiles that this profile is following.'''
+        follows = Follow.objects.filter(follower_profile=self)
+        return [follow.profile for follow in follows]
+
+    def get_num_following(self):
+        '''Return the number of profiles this profile is following.'''
+        return Follow.objects.filter(follower_profile=self).count()
+
     def get_absolute_url(self):
         '''Return the URL to display this profile.'''
         return reverse('show_profile', kwargs={'pk': self.pk})
@@ -57,3 +75,11 @@ class Photo(models.Model):
             return self.image_url
         else:
             return self.image_file.url
+
+class Follow(models.Model):
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="profile")
+    follower_profile = models.ForeignKey("Profile", on_delete=models.CASCADE, related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.follower_profile.display_name} follows {self.profile.display_name}"

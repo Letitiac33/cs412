@@ -138,6 +138,25 @@ h2 {
     font-size: 1em;
 }
 
+.profile_stats {
+    display: flex;
+    gap: 20px;
+}
+
+.profile_stats a {
+    text-decoration: none;
+    color: #262626;
+    font-size: 0.95em;
+}
+
+.profile_stats a:hover {
+    color: #c2a4f8;
+}
+
+.stat_count {
+    font-weight: 700;
+}
+
 .profile_bio {
     margin: 0;
     color: #555;

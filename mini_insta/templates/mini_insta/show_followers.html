@@ -1,0 +1,22 @@
+<!-- File: show_followers.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, showing followers of a profile -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<h2>Followers of {{ profile.display_name }}</h2>
+<div class="profile_grid">
+    {% for follower in profile.get_followers %}
+        <div class="profile_card">
+            <a href="{% url 'show_profile' follower.pk %}">
+                <img src="{{ follower.profile_image_url }}" alt="Profile Image">
+            </a>
+            <p>{{ follower.username }}</p>
+            <a href="{% url 'show_profile' follower.pk %}">{{ follower.display_name }}</a>
+        </div>
+    {% empty %}
+        <p>No followers yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}
