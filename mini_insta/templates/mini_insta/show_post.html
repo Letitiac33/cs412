@@ -24,6 +24,18 @@
         {% endwith %}
     </div>
 
+    {% with likes=post.get_all_like %}
+    {% if likes %}
+    <p class="likes_line">
+        <small>Liked by <strong>@{{ likes.0.profile.username }}</strong>
+        {% if likes|length > 1 %}
+            and {{ likes|length|add:"-1" }} other{{ likes|length|add:"-1"|pluralize }}
+        {% endif %}
+        </small>
+    </p>
+    {% endif %}
+    {% endwith %}
+
     <p>{{ post.caption }}</p>
 
     <div class="comments">

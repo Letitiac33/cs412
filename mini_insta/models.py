@@ -59,6 +59,11 @@ class Post(models.Model):
         '''Return all of the comments on this post.'''
         comments = Comment.objects.filter(post=self)
         return comments
+    
+    def get_all_like(self):
+        '''Return all of the likes on this post.'''
+        likes = Like.objects.filter(post=self)
+        return likes
 
     def get_absolute_url(self):
         '''Return the URL to display this post.'''
@@ -97,3 +102,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Comment: '{self.profile.username}: {self.text}'"
+    
+class Like(models.Model):
+    post = models.ForeignKey("Post", on_delete=models.CASCADE)
+    profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.profile} liked {self.post}"
