@@ -16,11 +16,18 @@ navigation panel shared across all pages -->
 </head>
 <body>
     <header>
-        <h1>Mini Insta</h1>
-        <nav>
-            <!-- Navigation to other pages -->
-            <a href="{% url 'show_all_profiles' %}">Profiles</a>
-        </nav>
+        <div class="header_left">
+            <h1>Mini Insta</h1>
+            <nav>
+                <a href="{% url 'show_all_profiles' %}">Profiles</a>
+            </nav>
+        </div>
+        {% if profile %}
+        <div class="header_profile">
+            <img src="{{ profile.profile_image_url }}" alt="Profile Image">
+            <span>@{{ profile.username }}</span>
+        </div>
+        {% endif %}
     </header>
 
     <!-- Page content is provided by the specific HTML page extending this base page -->
@@ -31,7 +38,9 @@ navigation panel shared across all pages -->
     <footer>
         {% if profile %}
         <nav>
+            <a href="{% url 'show_feed' profile.pk %}">Home</a>
             <a href="{% url 'create_post' profile.pk %}">Create Post</a>
+            <a href="{% url 'show_profile' profile.pk %}">Profile</a>
         </nav>
         {% endif %}
         <h3> Mini Insta created by Letitia Caspersen for BU-CS-412 </h3>

@@ -12,7 +12,7 @@
             <a href="{% url 'show_profile' followed.pk %}">
                 <img src="{{ followed.profile_image_url }}" alt="Profile Image">
             </a>
-            <p>{{ followed.username }}</p>
+            <p>@{{ followed.username }}</p>
             <a href="{% url 'show_profile' followed.pk %}">{{ followed.display_name }}</a>
         </div>
     {% empty %}

@@ -14,7 +14,7 @@
             <a href="{% url 'show_profile' profile.pk %}">
                 <img src="{{ profile.profile_image_url }}" alt="Profile Image">
             </a>
-            <p>{{profile.username}}</p>
+            <p>@{{profile.username}}</p>
             <a href="{% url 'show_profile' profile.pk %}">{{profile.display_name}}</a>
         </div>
     {% endfor %}

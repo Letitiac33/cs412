@@ -38,6 +38,11 @@ class Profile(models.Model):
         '''Return the number of profiles this profile is following.'''
         return Follow.objects.filter(follower_profile=self).count()
 
+    def get_post_feed(self):
+        '''Return Posts from all profiles being followed, newest first.'''
+        following = self.get_following()
+        return Post.objects.filter(profile__in=following).order_by('-timestamp')
+
     def get_absolute_url(self):
         '''Return the URL to display this profile.'''
         return reverse('show_profile', kwargs={'pk': self.pk})

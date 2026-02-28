@@ -12,7 +12,7 @@
             <a href="{% url 'show_profile' follower.pk %}">
                 <img src="{{ follower.profile_image_url }}" alt="Profile Image">
             </a>
-            <p>{{ follower.username }}</p>
+            <p>@{{ follower.username }}</p>
             <a href="{% url 'show_profile' follower.pk %}">{{ follower.display_name }}</a>
         </div>
     {% empty %}

@@ -19,6 +19,7 @@ header {
     border-bottom: 1px solid #dbdbdb;
     padding: 12px 24px;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     position: sticky;
@@ -27,11 +28,34 @@ header {
 }
 
 header h1 {
-    margin: 0;
+    margin: 0 16px 0 0;
     font-size: 1.5em;
     font-style: italic;
     color: #262626;
     letter-spacing: -0.5px;
+}
+
+.header_left {
+    display: flex;
+    align-items: center;
+}
+
+/* Header Profile */
+.header_profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #262626;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.header_profile img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #c2a4f8;
 }
 
 /* Navigation */
@@ -240,6 +264,38 @@ h2 {
     width: 100%;
     border-radius: 8px;
     object-fit: cover;
+}
+
+/* Feed */
+.feed {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.feed_post_header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.feed_post_header img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #c2a4f8;
+}
+
+.feed_post_header a {
+    font-weight: 700;
+    color: #262626;
+    text-decoration: none;
+    flex: 1;
+}
+
+.feed_post_header small {
+    color: #999;
 }
 
 /* Comments Section */

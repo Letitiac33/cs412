@@ -1,14 +1,19 @@
-<!-- File: show_post.html -->
-<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/19/2026 -->
-<!-- HTML page for mini insta, showing a single post -->
+<!-- File: show_feed.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, showing the post feed for a profile -->
 
 {% extends 'mini_insta/base.html' %}
 {% load static %}
 
 {% block content %}
+{% for post in posts %}
 <div class="post_detail">
-    <h2><a href="{% url 'show_profile' post.profile.pk %}">@{{ post.profile.username }}</a></h2>
-    <p><small>{{ post.timestamp }}</small></p>
+
+    <div class="feed_post_header">
+        <img src="{{ post.profile.profile_image_url }}" alt="Profile Image">
+        <a href="{% url 'show_profile' post.profile.pk %}">@{{ post.profile.username }}</a>
+        <small>{{ post.timestamp }}</small>
+    </div>
 
     <div class="photo_grid">
         {% with post.get_all_photos as photos %}
@@ -47,10 +52,7 @@
         {% endfor %}
     </div>
 
-    <div class="post_actions">
-        <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
-        <a href="{% url 'update_post' post.pk %}"><button type="button">Edit</button></a>
-        <a href="{% url 'delete_post' post.pk %}"><button type="button">Delete</button></a>
-    </div>
 </div>
+{% endfor %}
+
 {% endblock %}

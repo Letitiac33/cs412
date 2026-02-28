@@ -87,6 +87,23 @@ class UpdatePostView(UpdateView):
         '''Redirect to the post page after a successful update.'''
         return reverse('show_post', kwargs={'pk': self.object.pk})
 
+class PostFeedListView(ListView):
+    '''Display the post feed for a single Profile.'''
+    model = Post
+    template_name = 'mini_insta/show_feed.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        '''Return the post feed for the profile.'''
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_post_feed()
+
+    def get_context_data(self, **kwargs):
+        '''Add the profile to the context.'''
+        context = super().get_context_data(**kwargs)
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        return context
+
 class ShowFollowersDetailView(DetailView):
     '''Display the followers of a Profile.'''
     model = Profile
