@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="post_detail">
-    <h2>@{{ post.profile.username }}</h2>
+    <h2><a href="{% url 'show_profile' post.profile.pk %}">@{{ post.profile.username }}</a></h2>
     <p><small>{{ post.timestamp }}</small></p>
 
     <div class="photo_grid">
@@ -27,7 +27,7 @@
     {% with likes=post.get_all_like %}
     {% if likes %}
     <p class="likes_line">
-        <small>Liked by <strong>@{{ likes.0.profile.username }}</strong>
+        <small>Liked by <strong><a href="{% url 'show_profile' likes.0.profile.pk %}">@{{ likes.0.profile.username }}</a></strong>
         {% if likes|length > 1 %}
             and {{ likes|length|add:"-1" }} other{{ likes|length|add:"-1"|pluralize }}
         {% endif %}
@@ -41,7 +41,7 @@
     <div class="comments">
         {% for comment in post.get_all_comments %}
         <div class="comment">
-            <span class="comment_username">@{{ comment.profile.username }}</span>
+            <a href="{% url 'show_profile' comment.profile.pk %}"><span class="comment_username">@{{ comment.profile.username }}</span></a>
             <span class="comment_text">{{ comment.text }}</span>
         </div>
         {% endfor %}

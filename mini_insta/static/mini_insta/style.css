@@ -269,6 +269,13 @@ h2 {
     flex: 1;
 }
 
+.post_detail h2 a,
+.likes_line a,
+.comment a {
+    color: inherit;
+    text-decoration: none;
+}
+
 /* Forms */
 .create_post,
 .update_profile {
