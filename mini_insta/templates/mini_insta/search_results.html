@@ -1,0 +1,37 @@
+<!-- File: search_results.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, search results -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="create_post">
+    <h2>Search Results</h2>
+
+    <h3>Profiles</h3>
+    <div class="profile_grid">
+        {% for result in profiles %}
+        <div class="profile_card">
+            <a href="{% url 'show_profile' result.pk %}">
+                <img src="{{ result.profile_image_url }}" alt="Profile Image">
+            </a>
+            <p>@{{ result.username }}</p>
+            <a href="{% url 'show_profile' result.pk %}">{{ result.display_name }}</a>
+        </div>
+        {% empty %}
+        <p>No profiles found.</p>
+        {% endfor %}
+    </div>
+
+    <h3>Posts</h3>
+    {% for post in posts %}
+    <div class="post_detail">
+        <a href="{% url 'show_profile' post.profile.pk %}"><strong>@{{ post.profile.username }}</strong></a>
+        <p>{{ post.caption }}</p>
+        <a href="{% url 'show_post' post.pk %}"><button type="button">View Post</button></a>
+    </div>
+    {% empty %}
+    <p>No posts found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

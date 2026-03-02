@@ -1,0 +1,22 @@
+<!-- File: search.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 2/27/2026 -->
+<!-- HTML page for mini insta, search form -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="create_post">
+    <h2>Search</h2>
+
+    <form method="GET" action="{% url 'search' profile.pk %}">
+        <div class="form_field">
+            <label for="query">Search profiles and posts:</label>
+            <input type="text" name="query" id="query" placeholder="Enter search term...">
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Search</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

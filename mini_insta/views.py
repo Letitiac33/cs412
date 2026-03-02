@@ -115,3 +115,32 @@ class ShowFollowingDetailView(DetailView):
     model = Profile
     template_name = 'mini_insta/show_following.html'
     context_object_name = 'profile'
+
+class SearchView(ListView):
+    '''Search profiles and posts based on a text query.'''
+    template_name = 'mini_insta/search_results.html'
+    context_object_name = 'posts'
+
+    def dispatch(self, request, *args, **kwargs):
+        '''If no query is present, show the search form. Otherwise, continue to ListView.'''
+        if 'query' not in request.GET:
+            profile = Profile.objects.get(pk=self.kwargs['pk'])
+            return render(request, 'mini_insta/search.html', {'profile': profile})
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        '''Return Posts whose caption contains the query.'''
+        query = self.request.GET['query']
+        return Post.objects.filter(caption__icontains=query)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET['query']
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        context['query'] = query
+        context['profiles'] = (
+            Profile.objects.filter(username__icontains=query) |
+            Profile.objects.filter(display_name__icontains=query) |
+            Profile.objects.filter(bio_text__icontains=query)
+        )
+        return context
