@@ -1,0 +1,47 @@
+<!-- File: create_profile_form.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 3/6/2026 -->
+<!-- HTML page for mini insta, form to create a new profile and user account -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="update_profile">
+    <h2>Create an Account</h2>
+
+    <form method="POST" action="{% url 'create_profile' %}">
+        {% csrf_token %}
+
+        <h3>Account Info</h3>
+        {{ user_form.as_p }}
+
+        <h3>Profile Info</h3>
+
+        <div class="form_field">
+            <label for="username">Username:</label>
+            {{ form.username }}
+        </div>
+
+        <div class="form_field">
+            <label for="display_name">Display Name:</label>
+            {{ form.display_name }}
+        </div>
+
+        <div class="form_field">
+            <label for="bio_text">Bio:</label>
+            {{ form.bio_text }}
+        </div>
+
+        <div class="form_field">
+            <label for="profile_image_url">Profile Image URL:</label>
+            {{ form.profile_image_url }}
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Create Account</button>
+            <a href="{% url 'show_all_profiles' %}">
+                <button type="button">Cancel</button>
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

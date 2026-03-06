@@ -8,7 +8,7 @@
 <div class="create_post">
     <h2>Create a New Post for {{ profile.display_name }}</h2>
 
-    <form method="POST" enctype="multipart/form-data" action="{% url 'create_post' profile.pk %}">
+    <form method="POST" enctype="multipart/form-data" action="{% url 'create_post' %}">
         {% csrf_token %}
 
         <div class="form_field">

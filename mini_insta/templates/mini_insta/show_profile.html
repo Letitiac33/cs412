@@ -20,7 +20,15 @@
             </a>
         </div>
         <p class="profile_bio">{{ profile.bio_text }}</p>
-        <a href="{% url 'update_profile' profile.pk %}"><button type="button">Update Profile</button></a>
+        {% if user == profile.user %}
+        <a href="{% url 'update_profile' %}"><button type="button">Update Profile</button></a>
+        {% elif user.is_authenticated %}
+            {% if is_following %}
+            <a href="{% url 'delete_follow' profile.pk %}"><button type="button">Unfollow</button></a>
+            {% else %}
+            <a href="{% url 'follow_profile' profile.pk %}"><button type="button">Follow</button></a>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 

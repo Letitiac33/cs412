@@ -4,6 +4,7 @@
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class Profile(models.Model):
     username = models.CharField(max_length=32, unique=True)
@@ -11,6 +12,7 @@ class Profile(models.Model):
     profile_image_url = models.URLField(max_length=256) 
     bio_text = models.TextField(max_length=256)
     join_date = models.DateField(auto_now=False,auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.username}"

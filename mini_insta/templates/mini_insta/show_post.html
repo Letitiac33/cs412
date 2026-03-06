@@ -49,8 +49,17 @@
 
     <div class="post_actions">
         <a href="{% url 'show_profile' post.profile.pk %}"><button type="button">Back to profile</button></a>
+        {% if user.is_authenticated and user != post.profile.user %}
+            {% if is_liked %}
+            <a href="{% url 'delete_like' post.pk %}"><button type="button">Unlike</button></a>
+            {% else %}
+            <a href="{% url 'like_post' post.pk %}"><button type="button">Like</button></a>
+            {% endif %}
+        {% endif %}
+        {% if user == post.profile.user %}
         <a href="{% url 'update_post' post.pk %}"><button type="button">Edit</button></a>
         <a href="{% url 'delete_post' post.pk %}"><button type="button">Delete</button></a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

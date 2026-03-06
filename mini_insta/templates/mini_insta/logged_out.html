@@ -1,0 +1,12 @@
+<!-- File: logged_out.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 3/6/2026 -->
+<!-- Logout confirmation page for mini_insta -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block content %}
+<div class="create_post">
+    <h2>You have been logged out.</h2>
+    <a href="{% url 'login' %}"><button type="button">Log in again</button></a>
+</div>
+{% endblock %}

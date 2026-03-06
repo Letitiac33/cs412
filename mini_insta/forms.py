@@ -23,6 +23,13 @@ class UpdateProfileForm(forms.ModelForm):
         model = Profile
         fields = ['display_name', 'profile_image_url', 'bio_text']
 
+class CreateProfileForm(forms.ModelForm):
+    '''A form to create a new Profile in the database.'''
+
+    class Meta:
+        model = Profile
+        fields = ['username', 'display_name', 'bio_text', 'profile_image_url']
+
 class UpdatePostForm(forms.ModelForm):
     '''A form to update a post's caption in the database.'''
 
