@@ -163,12 +163,15 @@ class CreateProfileView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_form'] = UserCreationForm()
+        if 'user_form' not in kwargs:
+            context['user_form'] = UserCreationForm()
         return context
 
     def form_valid(self, form):
         '''Create the User, log them in, attach to the Profile, then save.'''
         user_form = UserCreationForm(self.request.POST)
+        if not user_form.is_valid():
+            return self.render_to_response(self.get_context_data(form=form, user_form=user_form))
         user = user_form.save()
         login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
         form.instance.user = user
