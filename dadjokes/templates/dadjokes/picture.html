@@ -1,0 +1,5 @@
+{% extends 'dadjokes/base.html' %}
+{% block content %}
+<h1>Picture #{{ picture.pk }}</h1>
+<img src="{{ picture.image_url }}" alt="Picture {{ picture.pk }}" style="max-width:500px;">
+{% endblock %}
