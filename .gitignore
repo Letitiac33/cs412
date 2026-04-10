@@ -55,3 +55,6 @@ desktop.ini
 htmlcov/
 .coverage
 .coverage.*
+
+# Claude Code settings
+.claude/settings.local.json

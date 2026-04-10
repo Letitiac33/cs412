@@ -11,6 +11,8 @@ from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, CreateProf
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from rest_framework import generics
+from .serializers import ProfileSerializer, PostSerializer
 
 class MiniInstaLoginRequiredMixin(LoginRequiredMixin):
     def get_logged_in_user_profile(self):
@@ -243,3 +245,39 @@ class DeleteLikeView(MiniInstaLoginRequiredMixin, View):
         liker = self.get_logged_in_user_profile()
         Like.objects.filter(post=post, profile=liker).delete()
         return redirect('show_post', pk=post.pk)
+
+
+# REST API views
+
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    '''Returns a JSON representation of one Profile by primary key.'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProfileListAPIView(generics.ListAPIView):
+    '''Returns a JSON list of all Profiles.'''
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+
+class ProfilePostsAPIView(generics.ListAPIView):
+    '''Returns a JSON list of Posts (with photos) for one Profile.'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(profile__pk=self.kwargs['pk']).order_by('-timestamp')
+
+
+class ProfileFeedAPIView(generics.ListAPIView):
+    '''Returns a JSON feed (posts from followed profiles) for one Profile.'''
+    serializer_class = PostSerializer
+
+    def get_queryset(self):
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        return profile.get_post_feed()
+
+
+class CreatePostAPIView(generics.CreateAPIView):
+    '''Creates a new Post for a Profile. POST profile id and caption in request body.'''
+    serializer_class = PostSerializer

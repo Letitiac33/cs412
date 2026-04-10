@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
-from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView, FollowProfileView, DeleteFollowView, LikePostView, DeleteLikeView
+from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView, FollowProfileView, DeleteFollowView, LikePostView, DeleteLikeView, ProfileDetailAPIView, ProfileListAPIView, ProfilePostsAPIView, ProfileFeedAPIView, CreatePostAPIView
 
 
 urlpatterns = [
@@ -22,6 +22,13 @@ urlpatterns = [
     path('post/<int:pk>/like', LikePostView.as_view(), name='like_post'),
     path('post/<int:pk>/delete_like', DeleteLikeView.as_view(), name='delete_like'),
     path('create_profile', CreateProfileView.as_view(), name='create_profile'),
+
+    # REST API
+    path('api/profile/<int:pk>', ProfileDetailAPIView.as_view(), name='api_profile'),
+    path('api/profiles', ProfileListAPIView.as_view(), name='api_profiles'),
+    path('api/profile/<int:pk>/posts', ProfilePostsAPIView.as_view(), name='api_profile_posts'),
+    path('api/profile/<int:pk>/feed', ProfileFeedAPIView.as_view(), name='api_profile_feed'),
+    path('api/posts/create', CreatePostAPIView.as_view(), name='api_create_post'),
     path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name='logout'),
     path('logout_confirmation/', TemplateView.as_view(template_name='mini_insta/logged_out.html'), name='logout_confirmation'),
