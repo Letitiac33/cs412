@@ -12,6 +12,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.authtoken.models import Token
+from django.contrib.auth import authenticate, login as auth_login
 from .serializers import ProfileSerializer, PostSerializer
 
 class MiniInstaLoginRequiredMixin(LoginRequiredMixin):
@@ -249,21 +255,47 @@ class DeleteLikeView(MiniInstaLoginRequiredMixin, View):
 
 # REST API views
 
+class LoginAPIView(APIView):
+    '''Accepts username+password, returns token, user, and profile.'''
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        user = authenticate(
+            request,
+            username=request.data.get('username'),
+            password=request.data.get('password'),
+        )
+        if user:
+            auth_login(request, user)
+            token, _ = Token.objects.get_or_create(user=user)
+            profile = Profile.objects.filter(user=user).first()
+            profile_data = ProfileSerializer(profile).data if profile else None
+            return Response({'token': token.key, 'user': user.username, 'profile': profile_data})
+        return Response({'error': 'Invalid credentials'}, status=400)
+
+
 class ProfileDetailAPIView(generics.RetrieveAPIView):
     '''Returns a JSON representation of one Profile by primary key.'''
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class ProfileListAPIView(generics.ListAPIView):
     '''Returns a JSON list of all Profiles.'''
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class ProfilePostsAPIView(generics.ListAPIView):
     '''Returns a JSON list of Posts (with photos) for one Profile.'''
     serializer_class = PostSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         return Post.objects.filter(profile__pk=self.kwargs['pk']).order_by('-timestamp')
@@ -272,6 +304,8 @@ class ProfilePostsAPIView(generics.ListAPIView):
 class ProfileFeedAPIView(generics.ListAPIView):
     '''Returns a JSON feed (posts from followed profiles) for one Profile.'''
     serializer_class = PostSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         profile = Profile.objects.get(pk=self.kwargs['pk'])
@@ -281,3 +315,5 @@ class ProfileFeedAPIView(generics.ListAPIView):
 class CreatePostAPIView(generics.CreateAPIView):
     '''Creates a new Post for a Profile. POST profile id and caption in request body.'''
     serializer_class = PostSerializer
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]

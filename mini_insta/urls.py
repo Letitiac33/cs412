@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
-from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView, FollowProfileView, DeleteFollowView, LikePostView, DeleteLikeView, ProfileDetailAPIView, ProfileListAPIView, ProfilePostsAPIView, ProfileFeedAPIView, CreatePostAPIView
+from .views import ProfileListView, ProfileDetailView, PostDetailView, CreatePostView, UpdateProfileView, DeletePostView, UpdatePostView, ShowFollowersDetailView, ShowFollowingDetailView, PostFeedListView, SearchView, ShowMyProfileView, CreateProfileView, FollowProfileView, DeleteFollowView, LikePostView, DeleteLikeView, ProfileDetailAPIView, ProfileListAPIView, ProfilePostsAPIView, ProfileFeedAPIView, CreatePostAPIView, LoginAPIView
 
 
 urlpatterns = [
@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/profiles', ProfileListAPIView.as_view(), name='api_profiles'),
     path('api/profile/<int:pk>/posts', ProfilePostsAPIView.as_view(), name='api_profile_posts'),
     path('api/profile/<int:pk>/feed', ProfileFeedAPIView.as_view(), name='api_profile_feed'),
+    path('api/login/', LoginAPIView.as_view(), name='api_login'),
     path('api/posts/create', CreatePostAPIView.as_view(), name='api_create_post'),
     path('login/', auth_views.LoginView.as_view(template_name='mini_insta/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name='logout'),
