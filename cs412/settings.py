@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'dadjokes',
     'rest_framework',
     'rest_framework.authtoken',
+    'mycloset',
 ]
 
 REST_FRAMEWORK = {
