@@ -21,7 +21,6 @@ class ClothingItem(models.Model):
     class ClothingType(models.TextChoices):
         TOP = 'TOP', 'Top'
         BOTTOM = 'BOTTOM', 'Bottom'
-        DRESS = 'DRESS', 'Dress'
         SHOES = 'SHOES', 'Shoes'
         ACCESSORY = 'ACCESSORY', 'Accessory'
 
@@ -79,10 +78,39 @@ class Outfit(models.Model):
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+
     top = models.ForeignKey(ClothingItem, on_delete=models.CASCADE, related_name='outfit_as_top')
+    top_x = models.IntegerField(null=True, blank=True)
+    top_y = models.IntegerField(null=True, blank=True)
+    top_width = models.PositiveIntegerField(null=True, blank=True)
+    top_height = models.PositiveIntegerField(null=True, blank=True)
+
     bottom = models.ForeignKey(ClothingItem, on_delete=models.CASCADE, related_name='outfit_as_bottom')
+    bottom_x = models.IntegerField(null=True, blank=True)
+    bottom_y = models.IntegerField(null=True, blank=True)
+    bottom_width = models.PositiveIntegerField(null=True, blank=True)
+    bottom_height = models.PositiveIntegerField(null=True, blank=True)
+
     shoes = models.ForeignKey(ClothingItem, on_delete=models.SET_NULL, null=True, related_name='outfit_as_shoes')
+    shoes_x = models.IntegerField(null=True, blank=True)
+    shoes_y = models.IntegerField(null=True, blank=True)
+    shoes_width = models.PositiveIntegerField(null=True, blank=True)
+    shoes_height = models.PositiveIntegerField(null=True, blank=True)
+
     accessory = models.ForeignKey(ClothingItem, on_delete=models.SET_NULL, null=True, blank=True, related_name='outfit_as_accessory')
+    accessory_x = models.IntegerField(null=True, blank=True)
+    accessory_y = models.IntegerField(null=True, blank=True)
+    accessory_width = models.PositiveIntegerField(null=True, blank=True)
+    accessory_height = models.PositiveIntegerField(null=True, blank=True)
+
+    DOLL_CENTER_X = 197
+
+    # @property lets templates use {{ outfit.shoes_left_x }} like a field instead of a method call
+    @property
+    def shoes_left_x(self):
+        if self.shoes_x is not None and self.shoes_width:
+            return 2 * self.DOLL_CENTER_X - self.shoes_x - self.shoes_width
+        return None
 
     def __str__(self):
         return f"{self.name} - ({self.profile})"
