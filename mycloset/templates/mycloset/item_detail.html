@@ -1,0 +1,33 @@
+<!-- File: item_detail.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Detail page for a single clothing item. Allows renaming and deletion -->
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<a href="{% url 'mycloset_closet' %}">← Back to Closet</a>
+
+<div class="item-detail">
+    <div class="item-detail-image">
+        <img src="{{ item.processed_image.url }}" alt="{{ item.name }}">
+    </div>
+
+    <div class="item-detail-info">
+        <span class="clothing_type">{{ item.get_type_display }}</span>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="name" value="{{ item.name }}" required>
+            <button type="submit">Save</button>
+        </form>
+
+        {% if outfit_count > 0 %}
+        <p class="warning-text">This item is used in {{ outfit_count }} outfit{{ outfit_count|pluralize }}. Deleting it will delete those outfits too.</p>
+        {% endif %}
+        <form method="POST" action="{% url 'mycloset_item_delete' item.pk %}"
+              onsubmit="return confirm('Delete {{ item.name }}?{% if outfit_count > 0 %} This will also permanently delete {{ outfit_count }} outfit{{ outfit_count|pluralize }}.{% endif %}')">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

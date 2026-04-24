@@ -1,3 +1,6 @@
+<!-- File: add_clothing.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Form for uploading a new clothing item to the user's closet -->
 {% extends 'mycloset/base.html' %}
 
 {% block content %}
@@ -7,5 +10,6 @@
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
+    <a href="{% url 'mycloset_closet' %}">Cancel</a>
 </form>
 {% endblock %}
