@@ -1,0 +1,26 @@
+<!-- File: outfit_doll.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Reusable fragment that renders clothing items positioned on the fashion doll -->
+{% if outfit.shoes %}
+<img src="{{ outfit.shoes.processed_image.url }}"
+     style="position:absolute;z-index:1;left:{{ outfit.shoes_x }}px;top:{{ outfit.shoes_y }}px;width:{{ outfit.shoes_width }}px;height:{{ outfit.shoes_height }}px;">
+{% if outfit.shoes_left_x is not None %}
+<img src="{{ outfit.shoes.processed_image.url }}"
+     style="position:absolute;z-index:1;left:{{ outfit.shoes_left_x }}px;top:{{ outfit.shoes_y }}px;width:{{ outfit.shoes_width }}px;height:{{ outfit.shoes_height }}px;transform:scaleX(-1);">
+{% endif %}
+{% endif %}
+
+{% if outfit.bottom %}
+<img src="{{ outfit.bottom.processed_image.url }}"
+     style="position:absolute;z-index:2;left:{{ outfit.bottom_x }}px;top:{{ outfit.bottom_y }}px;width:{{ outfit.bottom_width }}px;height:{{ outfit.bottom_height }}px;">
+{% endif %}
+
+{% if outfit.top %}
+<img src="{{ outfit.top.processed_image.url }}"
+     style="position:absolute;z-index:3;left:{{ outfit.top_x }}px;top:{{ outfit.top_y }}px;width:{{ outfit.top_width }}px;height:{{ outfit.top_height }}px;">
+{% endif %}
+
+{% if outfit.accessory %}
+<img src="{{ outfit.accessory.processed_image.url }}"
+     style="position:absolute;z-index:4;left:{{ outfit.accessory_x }}px;top:{{ outfit.accessory_y }}px;width:{{ outfit.accessory_width }}px;height:{{ outfit.accessory_height }}px;">
+{% endif %}

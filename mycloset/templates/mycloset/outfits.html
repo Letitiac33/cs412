@@ -1,0 +1,32 @@
+<!-- File: outfits.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Grid view of all outfits with scaled doll previews -->
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<div class="outfits-header">
+    <h2>Outfits</h2>
+    <a href="{% url 'mycloset_outfit_builder' %}">+ New Outfit</a>
+</div>
+
+{% if outfits %}
+<div class="outfits-grid">
+    {% for outfit in outfits %}
+    <a href="{% url 'mycloset_outfit_detail' outfit.pk %}" class="outfit-card">
+        <div class="outfit-preview-clip">
+            <div class="outfit-preview-scale">
+                <div class="preview-doll-area">
+                    <img src="{{ doll_url }}" height="600" draggable="false">
+                    {% include 'mycloset/outfit_doll.html' %}
+                </div>
+            </div>
+        </div>
+        <p>{{ outfit.name }}</p>
+        <span class="outfit-username">@{{ outfit.profile.username }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>No outfits yet.</p>
+{% endif %}
+{% endblock %}

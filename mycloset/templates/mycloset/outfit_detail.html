@@ -1,0 +1,56 @@
+<!-- File: outfit_detail.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Detail view for a single outfit, showing the doll preview and item list -->
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<div class="outfits-header">
+    <div>
+        <h2>{{ outfit.name }}</h2>
+        <span class="outfit-username">@{{ outfit.profile.username }}</span>
+    </div>
+    {% if is_owner %}
+    <div style="display:flex;gap:8px;align-items:center;">
+        <a href="{% url 'mycloset_outfit_edit' outfit.pk %}">Update Outfit</a>
+        <form method="POST" action="{% url 'mycloset_outfit_delete' outfit.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger">Delete</button>
+        </form>
+    </div>
+    {% endif %}
+</div>
+
+<div class="outfit-detail" style="margin-top:16px;">
+    <div class="doll-area">
+        <img src="{{ doll_url }}" class="doll-base" draggable="false">
+        {% include 'mycloset/outfit_doll.html' %}
+    </div>
+
+    <div class="outfit-item-list">
+        {% if outfit.top %}
+        <div class="outfit-item-entry">
+            <img src="{{ outfit.top.processed_image.url }}" alt="{{ outfit.top.name }}">
+            <span>{{ outfit.top.name }}</span>
+        </div>
+        {% endif %}
+        {% if outfit.bottom %}
+        <div class="outfit-item-entry">
+            <img src="{{ outfit.bottom.processed_image.url }}" alt="{{ outfit.bottom.name }}">
+            <span>{{ outfit.bottom.name }}</span>
+        </div>
+        {% endif %}
+        {% if outfit.shoes %}
+        <div class="outfit-item-entry">
+            <img src="{{ outfit.shoes.processed_image.url }}" alt="{{ outfit.shoes.name }}">
+            <span>{{ outfit.shoes.name }}</span>
+        </div>
+        {% endif %}
+        {% if outfit.accessory %}
+        <div class="outfit-item-entry">
+            <img src="{{ outfit.accessory.processed_image.url }}" alt="{{ outfit.accessory.name }}">
+            <span>{{ outfit.accessory.name }}</span>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
