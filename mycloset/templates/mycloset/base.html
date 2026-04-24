@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Closet</title>
+    <link rel="stylesheet" href="{% static 'mycloset/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header_left">
+            <h1>My Closet</h1>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="header_profile">
+            <nav>
+                <a href="{% url 'mycloset_home' %}">@{{ user.mycloset_profiles.first.username }}</a>
+            </nav>
+            <form method="POST" action="{% url 'mycloset_logout' %}">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        </div>
+        {% else %}
+        <nav>
+            <a href="{% url 'mycloset_login' %}">Log in</a>
+        </nav>
+        {% endif %}
+    </header>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    {% if user.is_authenticated %}
+    <footer>
+        <nav>
+            <a href="{% url 'mycloset_closet' %}">Closet</a>
+        </nav>
+    </footer>
+    {% endif %}
+</body>
+</html>

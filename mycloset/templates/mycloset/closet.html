@@ -1,0 +1,27 @@
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<h2>My Closet</h2>
+
+<a href="{% url 'mycloset_add' %}">+ Add Item</a>
+
+{% if clothing_items %}
+<div class="clothing_list">
+    {% for item in clothing_items %}
+    <div class="clothing_card">
+        {% if item.processed_image %}
+            <img src="{{ item.processed_image.url }}" alt="{{ item.name }}">
+        {% elif item.uploaded_image %}
+            <img src="{{ item.uploaded_image.url }}" alt="{{ item.name }}">
+        {% endif %}
+        <div class="clothing_info">
+            <strong>{{ item.name }}</strong>
+            <span class="clothing_type">{{ item.get_type_display }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No clothing items yet.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<div class="form_card">
+    <h2>Log In</h2>
+
+    <form method="POST" action="{% url 'mycloset_login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{% url 'mycloset_home' %}">
+        {{ form.as_p }}
+        <div class="form_buttons">
+            <button type="submit">Log In</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

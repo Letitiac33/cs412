@@ -25,7 +25,7 @@ class ClothingItem(models.Model):
         SHOES = 'SHOES', 'Shoes'
         ACCESSORY = 'ACCESSORY', 'Accessory'
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=16, choices=ClothingType.choices)
     uploaded_image = models.ImageField(upload_to='mycloset/uploaded/')
@@ -35,7 +35,7 @@ class ClothingItem(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class Friend(models.Model):
+class FriendRequest(models.Model):
     '''Represents a friend request between two users.'''
 
     class Status(models.TextChoices):
@@ -43,21 +43,41 @@ class Friend(models.Model):
         ACCEPTED = 'ACCEPTED', 'Accepted'
         DECLINED = 'DECLINED', 'Declined'
 
-    requesting_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_requests')
-    responding_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_requests')
+    requesting_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sent_requests')
+    responding_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='received_requests')
     status = models.CharField(max_length=16, choices=Status.choices, default=Status.PENDING)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.requesting_user} -> {self.responding_user} ({self.status})"
+        return f"{self.requesting_profile} -> {self.responding_profile} ({self.status})"
 
+    def accept(self):
+        '''Accepts the friend request and creates a Friendship.'''
+        if self.status == self.Status.PENDING:
+            self.status = self.Status.ACCEPTED
+            self.save()
+            Friendship.objects.create(profile1=self.requesting_profile, profile2=self.responding_profile)
+    
+    def decline(self):
+        '''Declines the friend request.'''
+        if self.status == self.Status.PENDING:
+            self.status = self.Status.DECLINED
+            self.save()
+
+class Friendship(models.Model):
+    '''Represents a friendship between two users.'''
+
+    profile1 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friendship_profile1')
+    profile2 = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='friendship_profile2')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.profile1} & {self.profile2}"
+    
 class Outfit(models.Model):
-    '''Represents an outfit composed of clothing items.
-    Must have either a top + bottom, or a dress — not both.
-    Must always have shoes and an accessory.
-    '''
+    '''Represents an outfit composed of clothing items.'''
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     top = models.ForeignKey(ClothingItem, on_delete=models.CASCADE, related_name='outfit_as_top')
     bottom = models.ForeignKey(ClothingItem, on_delete=models.CASCADE, related_name='outfit_as_bottom')
@@ -65,12 +85,12 @@ class Outfit(models.Model):
     accessory = models.ForeignKey(ClothingItem, on_delete=models.SET_NULL, null=True, blank=True, related_name='outfit_as_accessory')
 
     def __str__(self):
-        return f"{self.name} - ({self.user})"
+        return f"{self.name} - ({self.profile})"
 
 class Rating(models.Model):
     '''Represents a rating given by a user to an outfit.'''
 
-    rater = models.ForeignKey(User, on_delete=models.CASCADE)
+    rater = models.ForeignKey(Profile, on_delete=models.CASCADE)
     outfit = models.ForeignKey(Outfit, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
