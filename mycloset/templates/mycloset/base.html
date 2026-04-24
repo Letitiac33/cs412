@@ -1,3 +1,6 @@
+<!-- File: base.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Base template for My Closet webapp. Contains header, footer nav, and content block -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +41,7 @@
     <footer>
         <nav>
             <a href="{% url 'mycloset_closet' %}">Closet</a>
+            <a href="{% url 'mycloset_outfits' %}">Outfits</a>
         </nav>
     </footer>
     {% endif %}
