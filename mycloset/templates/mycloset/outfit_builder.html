@@ -1,0 +1,181 @@
+<!-- File: outfit_builder.html -->
+<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
+<!-- Drag-and-drop outfit builder using jQuery UI draggable/droppable/resizable -->
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<div class="outfit-builder">
+
+    <div class="item-sidebar">
+        <input type="text" id="itemSearch" placeholder="Search...">
+        <div class="type-filters">
+            <button class="type-btn active" data-type="ALL">All</button>
+            <button class="type-btn" data-type="TOP">Tops</button>
+            <button class="type-btn" data-type="BOTTOM">Bottoms</button>
+            <button class="type-btn" data-type="SHOES">Shoes</button>
+            <button class="type-btn" data-type="ACCESSORY">Accessory</button>
+        </div>
+        <div class="item-grid">
+            {% for item in clothing_items %}
+            <div class="clothing-thumb"
+                 data-src="{% if item.processed_image %}{{ item.processed_image.url }}{% else %}{{ item.uploaded_image.url }}{% endif %}"
+                 data-type="{{ item.type }}"
+                 data-pk="{{ item.pk }}"
+                 data-name="{{ item.name|lower }}">
+                <img src="{% if item.processed_image %}{{ item.processed_image.url }}{% else %}{{ item.uploaded_image.url }}{% endif %}"
+                     alt="{{ item.name }}" draggable="false">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="doll-area" id="dollArea">
+        <img src="{{ doll_url }}" class="doll-base" draggable="false">
+    </div>
+
+    <div class="outfit-controls">
+        <div class="trash-zone" id="trashZone">✕</div>
+        <input type="text" id="outfitName" placeholder="Outfit name">
+        <button id="saveBtn">Save</button>
+        <a href="{{ cancel_url }}">Cancel</a>
+        <p id="saveMsg"></p>
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+<script>
+    const DOLL_CENTER_OFFSET = -3;
+    const Z_ORDER = { SHOES: 1, BOTTOM: 2, TOP: 3, ACCESSORY: 4 };
+    const existingOutfit = {{ outfit_json|safe }};
+
+    // Creates a draggable + resizable item on the doll canvas
+    function place(src, type, pk, x, y, w, h, mirrored) {
+        const img = $('<img>').attr('src', src).css({ width: '100%', height: '100%', display: 'block', 'pointer-events': 'none' });
+        if (mirrored) img.css('transform', 'scaleX(-1)');
+        const el = $('<div class="placed-item">')
+            .attr({ 'data-type': type, 'data-pk': pk })
+            .append(img)
+            .css({ position: 'absolute', left: x, top: y, width: w || 80, height: h || 80, zIndex: Z_ORDER[type] ?? 1 })
+            .appendTo('#dollArea')[0];
+        $(el).draggable({
+            drag(e, ui) { mirror(el, ui.position.left, ui.position.top, $(el).width()); }
+        }).resizable({
+            handles: 'all',
+            resize(e, ui) { mirror(el, ui.position.left, ui.position.top, ui.size.width, ui.size.height); }
+        });
+        return el;
+    }
+
+    // Keeps the shoe pair symmetric around the doll center
+    function mirror(el, x, y, w, h) {
+        if (!el._pair) return;
+        const center = $('#dollArea').width() / 2 + DOLL_CENTER_OFFSET;
+        const update = { left: 2 * center - x - w, top: y };
+        if (h !== undefined) Object.assign(update, { width: w, height: h });
+        $(el._pair).css(update);
+    }
+
+    // Sidebar thumbnails drag as a clone
+    $('.clothing-thumb').draggable({
+    helper: function() {
+        return $(this).clone().css({
+            width: $(this).width(),
+            height: $(this).height(),
+            zIndex: 9999
+        });
+    },
+    appendTo: 'body',
+    revert: 'invalid'
+    });
+
+    // Dropping a thumbnail onto the doll places it as a positioned item
+    $('#dollArea').droppable({
+        accept: '.clothing-thumb',
+        tolerance: 'pointer',
+        drop(e, ui) {
+            const type = ui.draggable.data('type'), pk = ui.draggable.data('pk'), src = ui.draggable.data('src');
+            $(`#dollArea [data-type="${type}"]`).remove();
+            const x = ui.offset.left - $(this).offset().left;
+            const y = ui.offset.top - $(this).offset().top;
+            if (type === 'SHOES') {
+                const center = $('#dollArea').width() / 2 + DOLL_CENTER_OFFSET;
+                const rightX = x + 44, leftX = 2 * center - rightX - 80;
+                const right = place(src, type, pk, rightX, y);
+                const left  = place(src, type, pk, leftX,  y, 80, 80, true);
+                right._pair = left; left._pair = right;
+            } else {
+                place(src, type, pk, x, y);
+            }
+        }
+    });
+
+    // Dropping a placed item on the trash removes it and its shoe pair
+    $('#trashZone').droppable({
+        accept: '.placed-item',
+        tolerance: 'pointer',
+        over() { $(this).addClass('trash-active'); },
+        out()  { $(this).removeClass('trash-active'); },
+        drop(e, ui) {
+            $(this).removeClass('trash-active');
+            if (ui.draggable[0]._pair) $(ui.draggable[0]._pair).remove();
+            ui.draggable.remove();
+        }
+    });
+
+    // Sidebar search and type filter
+    let activeType = 'ALL';
+    function filterItems() {
+        const search = $('#itemSearch').val().toLowerCase();
+        $('.clothing-thumb').each(function() {
+            $(this).toggle((activeType === 'ALL' || $(this).data('type') === activeType) && $(this).data('name').includes(search));
+        });
+    }
+    $('.type-btn').click(function() {
+        $('.type-btn').removeClass('active'); $(this).addClass('active');
+        activeType = $(this).data('type');
+        filterItems();
+    });
+    $('#itemSearch').on('input', filterItems);
+
+    // Pre-load saved item positions when editing an existing outfit
+    if (existingOutfit) {
+        $('#outfitName').val(existingOutfit.name);
+        existingOutfit.items.forEach(item => {
+            if (item.type === 'SHOES') {
+                const center = $('#dollArea').width() / 2 + DOLL_CENTER_OFFSET;
+                const leftX = 2 * center - item.x - item.width;
+                const right = place(item.src, item.type, item.pk, item.x,  item.y, item.width, item.height);
+                const left  = place(item.src, item.type, item.pk, leftX, item.y, item.width, item.height, true);
+                right._pair = left; left._pair = right;
+            } else {
+                place(item.src, item.type, item.pk, item.x, item.y, item.width, item.height);
+            }
+        });
+    }
+
+    // Take the outfit name + item positions + sizes, send them to Django, then either show an error or go back to My Outfits
+    $('#saveBtn').click(() => {
+        const name = $('#outfitName').val().trim() || 'My Outfit';
+        const seen = new Set();
+        const items = [];
+        $('#dollArea .placed-item').each(function() {
+            const type = $(this).data('type');
+            if (seen.has(type)) return;
+            seen.add(type);
+            const pos = $(this).position();
+            items.push({ type, pk: +$(this).data('pk'), x: Math.round(pos.left), y: Math.round(pos.top), width: Math.round($(this).width()), height: Math.round($(this).height()) });
+        });
+        fetch('{% url "mycloset_outfit_save" %}', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': document.cookie.match(/csrftoken=([^;]+)/)?.[1] ?? '' },
+            body: JSON.stringify({ name, items, ...(existingOutfit && { outfit_pk: existingOutfit.pk }) }),
+        }).then(r => r.json()).then(data => {
+            if (data.error) $('#saveMsg').text(data.error);
+            else window.location.href = '{% url "mycloset_outfits" %}';
+        });
+    });
+</script>
+{% endblock %}
