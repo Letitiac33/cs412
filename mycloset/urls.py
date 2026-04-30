@@ -1,3 +1,6 @@
+# File: urls.py
+# Description: URL configuration for the mycloset app
+
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
@@ -10,7 +13,7 @@ from .views import (HomeView, ClothingItemListView, AddClothingItemView,
                     AcceptFriendRequestView, UnfriendView, CreateProfileView)
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='mycloset_home'),
+    path('', ClothingItemListView.as_view(), name='mycloset_home'),
     path('closet/', ClothingItemListView.as_view(), name='mycloset_closet'),
     path('add/', AddClothingItemView.as_view(), name='mycloset_add'),
     path('item/<int:pk>/', ClothingItemDetailView.as_view(), name='mycloset_item_detail'),

@@ -26,6 +26,7 @@ class MyClosetLoginRequiredMixin(LoginRequiredMixin):
 
 
 class HomeView(MyClosetLoginRequiredMixin, TemplateView):
+    """Landing page shown after login."""
     template_name = 'mycloset/home.html'
 
 
