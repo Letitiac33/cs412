@@ -2,16 +2,15 @@
 <!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
 <!-- Displays all clothing items in the user's closet with search and type filters -->
 {% extends 'mycloset/base.html' %}
+{% block body_class %}page-closet{% endblock %}
 
 {% block content %}
-<h2>My Closet</h2>
-
-<!-- Link to upload a new clothing item -->
-<a href="{% url 'mycloset_add' %}">+ Add Item</a>
-
 <!-- Search bar and type filter buttons -->
 <div class="closet-filters">
-    <input type="text" id="closetSearch" placeholder="Search...">
+    <div class="closet-search-row">
+        <input type="text" id="closetSearch" placeholder="Search...">
+        <a href="{% url 'mycloset_add' %}" class="btn-link">+ Add Item</a>
+    </div>
     <div class="type-filters">
         <button class="type-btn active" data-type="ALL">All</button>
         <button class="type-btn" data-type="TOP">Tops</button>

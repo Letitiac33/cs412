@@ -1,0 +1,75 @@
+{% extends 'mycloset/base.html' %}
+
+{% block body_class %}page-feed{% endblock %}
+{% block title %}Style Feed{% endblock %}
+
+{% block content %}
+<form method="GET" action="{% url 'mycloset_feed' %}" class="search-bar">
+    <input type="text" name="q" placeholder="Search profiles..." value="{{ query|default:'' }}" autofocus>
+    <button type="submit">Search</button>
+</form>
+
+{% if query is not None %}
+<div class="search-results">
+    {% if search_results %}
+        {% for result in search_results %}
+        <a href="{% url 'mycloset_public_profile' result.pk %}" class="search-profile-card">
+            {% if result.profile_image %}
+            <img src="{{ result.profile_image.url }}" alt="Profile Image">
+            {% else %}
+            <div class="profile-initials profile-initials--xs">{{ result.username|slice:":2"|upper }}</div>
+            {% endif %}
+            <span>@{{ result.username }}</span>
+        </a>
+        {% endfor %}
+    {% else %}
+    <p>No profiles found for "{{ query }}".</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if incoming_requests %}
+<div class="friend-requests-section">
+    <h3 class="requests-heading">✦ Friend Requests</h3>
+    <div class="friend-requests-list">
+        {% for req in incoming_requests %}
+        <div class="friend-request-card">
+            {% if req.requesting_profile.profile_image %}
+            <img src="{{ req.requesting_profile.profile_image.url }}" alt="{{ req.requesting_profile.username }}">
+            {% else %}
+            <div class="profile-initials profile-initials--xs">{{ req.requesting_profile.username|slice:":2"|upper }}</div>
+            {% endif %}
+            <a href="{% url 'mycloset_public_profile' req.requesting_profile.pk %}" class="req-username">@{{ req.requesting_profile.username }}</a>
+            <form method="POST" action="{% url 'mycloset_accept_request' req.requesting_profile.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-accept">Accept</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<h2>Style Feed</h2>
+{% if outfits %}
+<div class="outfits-grid">
+    {% for outfit in outfits %}
+    <a href="{% url 'mycloset_outfit_detail' outfit.pk %}" class="outfit-card">
+        <div class="outfit-preview-clip">
+            <div class="outfit-preview-scale">
+                <div class="preview-doll-area">
+                    <img src="{{ doll_url }}" height="600" draggable="false">
+                    {% include 'mycloset/outfit_doll.html' %}
+                </div>
+            </div>
+        </div>
+        <p>{{ outfit.name }}</p>
+        <span class="outfit-username">@{{ outfit.profile.username }}</span>
+        {% if outfit.avg_rating %}<span class="card-rating">&#9733; {{ outfit.avg_rating|floatformat:1 }}</span>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>No outfits from friends yet.</p>
+{% endif %}
+{% endblock %}

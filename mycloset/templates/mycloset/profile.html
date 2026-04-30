@@ -1,0 +1,45 @@
+{% extends 'mycloset/base.html' %}
+{% load static %}
+{% block body_class %}page-profile{% endblock %}
+
+{% block content %}
+<div class="profile_detail">
+    {% if profile.profile_image %}
+    <img src="{{ profile.profile_image.url }}" alt="Profile Image" class="profile-pic">
+    {% else %}
+    <div class="profile-initials">{{ profile.username|slice:":2"|upper }}</div>
+    {% endif %}
+    <div class="profile_info">
+        <p class="profile_username">@{{ profile.username }}</p>
+        <div class="profile_stats">
+            <span><span class="stat_count">{{ clothing_count }}</span> Items</span>
+            <span><span class="stat_count">{{ outfit_count }}</span> Outfits</span>
+            <a href="{% url 'mycloset_friends' %}" class="stat-link"><span class="stat_count">{{ friend_count }}</span> Friends</a>
+        </div>
+        <p class="profile_bio">{{ profile.bio }}</p>
+        <a href="{% url 'mycloset_update_profile' %}"><button type="button">Edit Profile</button></a>
+    </div>
+</div>
+
+{% if outfits %}
+<div class="outfits-grid" style="margin-top: 24px;">
+    {% for outfit in outfits %}
+    <a href="{% url 'mycloset_outfit_detail' outfit.pk %}" class="outfit-card">
+        <div class="outfit-preview-clip">
+            <div class="outfit-preview-scale">
+                <div class="preview-doll-area">
+                    <img src="{{ doll_url }}" height="600" draggable="false">
+                    {% include 'mycloset/outfit_doll.html' %}
+                </div>
+            </div>
+        </div>
+        <p>{{ outfit.name }}</p>
+        <span class="outfit-username">@{{ outfit.profile.username }}</span>
+        {% if outfit.avg_rating %}<span class="card-rating">&#9733; {{ outfit.avg_rating|floatformat:1 }}</span>{% endif %}
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>No outfits yet. <a href="{% url 'mycloset_outfit_builder' %}">Create one!</a></p>
+{% endif %}
+{% endblock %}

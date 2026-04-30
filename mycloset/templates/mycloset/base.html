@@ -7,18 +7,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Closet</title>
+    <title>{% block title %}My Closet{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'mycloset/style.css' %}">
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     <header>
         <div class="header_left">
-            <h1>My Closet</h1>
+            <a href="{% url 'mycloset_all_users' %}" class="header-logo-link">
+                <img src="{% static 'mycloset/images/logo.png' %}" alt="My Closet" class="header-logo">
+            </a>
         </div>
         {% if user.is_authenticated %}
         <div class="header_profile">
             <nav>
-                <a href="{% url 'mycloset_home' %}">@{{ user.mycloset_profiles.first.username }}</a>
+                <a href="{% url 'mycloset_profile' %}">@{{ user.mycloset_profiles.first.username }}</a>
             </nav>
             <form method="POST" action="{% url 'mycloset_logout' %}">
                 {% csrf_token %}
@@ -40,8 +44,10 @@
     {% if user.is_authenticated %}
     <footer>
         <nav>
+            <a href="{% url 'mycloset_feed' %}">Style Feed</a>
             <a href="{% url 'mycloset_closet' %}">Closet</a>
-            <a href="{% url 'mycloset_outfits' %}">Outfits</a>
+            <a href="{% url 'mycloset_outfits' %}">Outfit Planner</a>
+            <a href="{% url 'mycloset_profile' %}">Profile</a>
         </nav>
     </footer>
     {% endif %}

@@ -1,0 +1,24 @@
+{% extends 'mycloset/base.html' %}
+{% load static %}
+{% block body_class %}page-profile{% endblock %}
+{% block title %}All Users{% endblock %}
+
+{% block content %}
+<h2>All Users</h2>
+{% if profiles %}
+<div class="friends-list">
+    {% for profile in profiles %}
+    <a href="{% url 'mycloset_public_profile' profile.pk %}" class="friend-card">
+        {% if profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}" alt="{{ profile.username }}">
+        {% else %}
+        <div class="profile-initials profile-initials--sm">{{ profile.username|slice:":2"|upper }}</div>
+        {% endif %}
+        <span>@{{ profile.username }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>No other users yet.</p>
+{% endif %}
+{% endblock %}

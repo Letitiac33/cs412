@@ -23,6 +23,7 @@
         </div>
         <p>{{ outfit.name }}</p>
         <span class="outfit-username">@{{ outfit.profile.username }}</span>
+        {% if outfit.avg_rating %}<span class="card-rating">&#9733; {{ outfit.avg_rating|floatformat:1 }}</span>{% endif %}
     </a>
     {% endfor %}
 </div>

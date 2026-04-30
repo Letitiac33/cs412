@@ -1,0 +1,25 @@
+{% extends 'mycloset/base.html' %}
+{% load static %}
+{% block body_class %}page-profile{% endblock %}
+{% block title %}Friends{% endblock %}
+
+{% block content %}
+<h2>Friends</h2>
+
+{% if friends %}
+<div class="friends-list">
+    {% for friend in friends %}
+    <a href="{% url 'mycloset_public_profile' friend.pk %}" class="friend-card">
+        {% if friend.profile_image %}
+        <img src="{{ friend.profile_image.url }}" alt="{{ friend.username }}">
+        {% else %}
+        <div class="profile-initials profile-initials--sm">{{ friend.username|slice:":2"|upper }}</div>
+        {% endif %}
+        <span>@{{ friend.username }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p>No friends yet. Search for people on the <a href="{% url 'mycloset_feed' %}">Style Feed</a>!</p>
+{% endif %}
+{% endblock %}

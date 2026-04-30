@@ -1,0 +1,49 @@
+{% extends 'mycloset/base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="update_profile">
+    <h2>Create an Account</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'mycloset_signup' %}">
+        {% csrf_token %}
+
+        <h3>Account Info</h3>
+        {% for field in user_form %}
+        <div class="form_field">
+            <label>{{ field.label }}:</label>
+            {{ field }}
+            {% if field.errors %}
+            <span class="field-error">{{ field.errors|join:", " }}</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <h3>Profile Info</h3>
+
+        <div class="form_field">
+            <label>Username:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+            <span class="field-error">{{ form.username.errors|join:", " }}</span>
+            {% endif %}
+        </div>
+
+        <div class="form_field">
+            <label>Bio:</label>
+            {{ form.bio }}
+        </div>
+
+        <div class="form_field">
+            <label>Profile Photo:</label>
+            {{ form.profile_image }}
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Create Account</button>
+            <a href="{% url 'mycloset_login' %}"><button type="button">Log In Instead</button></a>
+        </div>
+    </form>
+</div>
+{% endblock %}

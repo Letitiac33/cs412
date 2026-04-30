@@ -1,17 +1,14 @@
-<!-- File: outfit_detail.html -->
-<!-- Author: Letitia Caspersen (letitiac@bu.edu), 4/24/2026 -->
-<!-- Detail view for a single outfit, showing the doll preview and item list -->
 {% extends 'mycloset/base.html' %}
 
 {% block content %}
 <div class="outfits-header">
     <div>
         <h2>{{ outfit.name }}</h2>
-        <span class="outfit-username">@{{ outfit.profile.username }}</span>
+        <a href="{% url 'mycloset_public_profile' outfit.profile.pk %}" class="outfit-username">@{{ outfit.profile.username }}</a>
     </div>
     {% if is_owner %}
     <div style="display:flex;gap:8px;align-items:center;">
-        <a href="{% url 'mycloset_outfit_edit' outfit.pk %}">Update Outfit</a>
+        <a href="{% url 'mycloset_outfit_edit' outfit.pk %}" class="btn-link">Update Outfit</a>
         <form method="POST" action="{% url 'mycloset_outfit_delete' outfit.pk %}">
             {% csrf_token %}
             <button type="submit" class="btn-danger">Delete</button>
@@ -28,29 +25,62 @@
 
     <div class="outfit-item-list">
         {% if outfit.top %}
-        <div class="outfit-item-entry">
+        <a href="{% url 'mycloset_item_detail' outfit.top.pk %}" class="outfit-item-entry">
             <img src="{{ outfit.top.processed_image.url }}" alt="{{ outfit.top.name }}">
             <span>{{ outfit.top.name }}</span>
-        </div>
+        </a>
         {% endif %}
         {% if outfit.bottom %}
-        <div class="outfit-item-entry">
+        <a href="{% url 'mycloset_item_detail' outfit.bottom.pk %}" class="outfit-item-entry">
             <img src="{{ outfit.bottom.processed_image.url }}" alt="{{ outfit.bottom.name }}">
             <span>{{ outfit.bottom.name }}</span>
-        </div>
+        </a>
         {% endif %}
         {% if outfit.shoes %}
-        <div class="outfit-item-entry">
+        <a href="{% url 'mycloset_item_detail' outfit.shoes.pk %}" class="outfit-item-entry">
             <img src="{{ outfit.shoes.processed_image.url }}" alt="{{ outfit.shoes.name }}">
             <span>{{ outfit.shoes.name }}</span>
-        </div>
+        </a>
         {% endif %}
         {% if outfit.accessory %}
-        <div class="outfit-item-entry">
+        <a href="{% url 'mycloset_item_detail' outfit.accessory.pk %}" class="outfit-item-entry">
             <img src="{{ outfit.accessory.processed_image.url }}" alt="{{ outfit.accessory.name }}">
             <span>{{ outfit.accessory.name }}</span>
-        </div>
+        </a>
         {% endif %}
+
+        <div class="rating-section">
+            <div class="rating-score-row">
+                <span class="rating-big-number">{{ avg_rating|default:"—" }}</span>
+                <div class="rating-score-meta">
+                    <div class="rating-static-stars">
+                        {% for i in "12345" %}
+                        <span class="static-star {% if avg_rating and i|add:0 <= avg_rating %}filled{% endif %}">&#9733;</span>
+                        {% endfor %}
+                    </div>
+                    <span class="rating-count">
+                        {% if rating_count %}{{ rating_count }} rating{{ rating_count|pluralize }}{% else %}No ratings yet{% endif %}
+                    </span>
+                </div>
+            </div>
+
+            {% if not is_owner %}
+            <form method="POST" action="{% url 'mycloset_outfit_rate' outfit.pk %}" class="star-form">
+                {% csrf_token %}
+                <p class="rate-label">{% if my_rating %}Your rating{% else %}Rate this outfit{% endif %}</p>
+                <div class="star-rating">
+                    {% for i in "54321" %}
+                    <input type="radio" name="rating" id="star{{ i }}" value="{{ i }}"
+                        {% if my_rating and my_rating.rating == i|add:0 %}checked{% endif %}>
+                    <label for="star{{ i }}">&#9733;</label>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn-rate">
+                    {% if my_rating %}Update{% else %}Submit{% endif %}
+                </button>
+            </form>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

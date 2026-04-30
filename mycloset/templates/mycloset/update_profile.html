@@ -1,0 +1,31 @@
+{% extends 'mycloset/base.html' %}
+
+{% block content %}
+<div class="update_profile">
+    <h2>Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data" action="{% url 'mycloset_update_profile' %}">
+        {% csrf_token %}
+
+        <div class="form_field">
+            <label for="username">Username:</label>
+            {{ form.username }}
+        </div>
+
+        <div class="form_field">
+            <label for="bio">Bio:</label>
+            {{ form.bio }}
+        </div>
+
+        <div class="form_field">
+            <label for="profile_image">Profile Image:</label>
+            {{ form.profile_image }}
+        </div>
+
+        <div class="form_buttons">
+            <button type="submit">Save</button>
+            <a href="{% url 'mycloset_profile' %}"><button type="button">Cancel</button></a>
+        </div>
+    </form>
+</div>
+{% endblock %}
