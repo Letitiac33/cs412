@@ -9,7 +9,7 @@
 
     <form method="POST" action="{% url 'mycloset_login' %}">
         {% csrf_token %}
-        <input type="hidden" name="next" value="{% url 'mycloset_home' %}">
+        <input type="hidden" name="next" value="{% url 'mycloset_closet' %}">
         {{ form.as_p }}
         <div class="form_buttons">
             <button type="submit">Log In</button>
