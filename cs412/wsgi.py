@@ -12,5 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cs412.settings')
+os.environ.setdefault('REMOVE_BG_API_KEY', 'XtMiBD8QpEyqgnLbPMpkDGGK')
 
 application = get_wsgi_application()
